@@ -11,7 +11,7 @@ jobs:
 
       # Installs the toolchain pinned in mise.toml (node for vsce, uv for the
       # prepublish build).
-      - uses: jdx/mise-action@v4
+      - uses: jdx/mise-action@v4.2.3
 
       - run: npm install
 
