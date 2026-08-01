@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@vscode/vsce": "^3.9.2",
-    "jscpd": "^5.0.12",
-    "prettier": "^3.9.5"
+    "jscpd": "^5.0.14",
+    "prettier": "^3.9.6"
   }
 }
