@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       # Installs the toolchain pinned in mise.toml (node for vsce, uv for the build).
-      - uses: jdx/mise-action@v4
+      - uses: jdx/mise-action@v4.2.3
       - run: npm install && mkdir -p ./bin
       - run: uv sync
       - run: npm run build
