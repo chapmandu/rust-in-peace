@@ -13,7 +13,7 @@ jobs:
       # prepublish build).
       - uses: jdx/mise-action@v4.2.3
 
-      - run: npm install
+      - run: npm ci
 
       - run: uv sync
 

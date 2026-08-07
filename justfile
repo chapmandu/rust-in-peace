@@ -11,7 +11,7 @@ c:
 setup:
     mise install
     uv sync
-    npm install
+    npm ci
 
 # Auto-fix lint issues and reformat the Python build scripts (ruff)
 [group('code quality')]

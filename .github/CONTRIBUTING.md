@@ -2,7 +2,7 @@
 
 1. Fork and clone this repo. `git clone https://github.com/<YOUR-USERNAME>/visual-studio-code`
 2. Create a branch for your changes. `git checkout -b my-new-feature`
-3. Install dependencies. `npm install`
+3. Install dependencies. `npm ci`
 4. Open the *visual-studio-code* folder in vscode.
 5. Hack away.
 6. Build and examine your changes in an Extension Development Host.
