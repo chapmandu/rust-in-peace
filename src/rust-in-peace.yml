@@ -350,14 +350,14 @@ colors:
   statusBar.foreground: *FG                                                     # Status Bar foreground color
   statusBar.debuggingBackground: *RED                                           # Status Bar background color when a program is being debugged
   statusBar.debuggingForeground: *STATUS_BAR_BG                                      # Status Bar foreground color when a program is being debugged
-  statusBar.noFolderBackground: *STATUS_BAR_BG                                       # Status Bar foreground color when no folder is opened
-  statusBar.noFolderForeground: *FG                                             # Status Bar background color when no folder is opened
+  statusBar.noFolderBackground: *STATUS_BAR_BG                                       # Status Bar background color when no folder is opened
+  statusBar.noFolderForeground: *FG                                             # Status Bar foreground color when no folder is opened
   statusBarItem.activeBackground:                                               # Status Bar item background color when clicking
   statusBarItem.hoverBackground:                                                # Status Bar item background color when hovering
   statusBarItem.prominentBackground: *RED                                       # Status Bar prominent items background color. Prominent items stand out from other Status Bar entries to indicate importance
   statusBarItem.prominentHoverBackground: *ORANGE                               # Status Bar prominent items background color when hovering. Prominent items stand out from other Status Bar entries to indicate importance
-  statusBarItem.remoteForeground: *BG                                           # Background color for the remote indicator on the status bar
-  statusBarItem.remoteBackground: *STATUS_BAR_BG                                       # Foreground color for the remote indicator on the status bar
+  statusBarItem.remoteForeground: *BUTTON_FG                                    # Foreground color for the remote indicator on the status bar
+  statusBarItem.remoteBackground: *BUTTON_BG                                    # Background color for the remote indicator on the status bar
   statusBar.border:
 
   # Title Bar Colors (MacOS Only)
