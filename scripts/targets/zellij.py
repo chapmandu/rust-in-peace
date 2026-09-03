@@ -133,18 +133,7 @@ MULTIPLAYER: list[Ref] = [
     0,  # player_10
 ]
 
-HEADER = """\
-// {slug} — a Zellij theme from the Megadeth "Rust in Peace" cover palette.
-// Generated from the src/ palettes by scripts/targets/zellij.py (just build-ports).
-// Do not edit by hand: edit the palette and rebuild.
-//
-// Chrome follows VS Code's tab strip: inactive tabs sit flat on the sunken
-// band with muted comment-blue labels, the active tab (and the status bar's
-// mode pill) pops as a glow-green pill — VS Code's green active-tab border —
-// and the focused frame is the keyword tube blue. Colours are `r g b`; 0
-// means unset, inheriting the terminal default. Every colour tracks the
-// shared palette; the unfocused frame wears VS Code's muted UI-line comment
-// blue."""
+HEADER = "// {slug} — generated; do not edit. Rebuild via `just build-ports`."
 
 
 def _render(palette: Palette, ref: Ref) -> str:

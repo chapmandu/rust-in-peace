@@ -1,25 +1,6 @@
-# rust-in-peace-hangar-18 — a Helix theme from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/helix.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-
-# Syntax roles mirror the rust-in-peace VSCode theme (original structure):
-#   keywords / operators / delimiters / tags = electric tube blue
-#   functions / decorators = glow green      strings  = logo gold
-#   types / parameters     = logo orange     constants = violet
-#   builtins / function.builtin = sky cyan   comments = muted blue
-#   this/self (variable.builtin) = logo gold italic
-# The theme is standalone — markup, diagnostics, and the full UI layer are
-# defined below. Every colour in [palette] derives from the shared role
-# table (scripts/roles.py); diffs and diagnostics follow the VS Code
-# theme's UI elements. Helix-only shades use declared mix formulas.
+# rust-in-peace-hangar-18 — generated; do not edit. Rebuild via `just build-ports`.
 
 keyword = { fg = "aqua" }
-"keyword.control" = { fg = "aqua" }
-"keyword.control.import" = { fg = "aqua" }
-"keyword.control.return" = { fg = "aqua" }
-"keyword.function" = { fg = "aqua" }
-"keyword.operator" = { fg = "aqua" }
-"keyword.directive" = { fg = "aqua" }
 operator = { fg = "aqua" }
 punctuation = { fg = "fg" }
 "punctuation.delimiter" = { fg = "aqua" }
@@ -29,32 +10,25 @@ special = { fg = "aqua" }
 
 function = { fg = "light-green" }
 "function.builtin" = { fg = "cyan" }
-"function.macro" = { fg = "light-green" }
 "function.special" = { fg = "cyan" }
 attribute = { fg = "light-green", modifiers = ["italic"] }
 
 string = { fg = "yellow" }
-"string.regexp" = { fg = "yellow" }
 "string.special" = { fg = "aqua" }
 "constant.character" = { fg = "yellow" }
 
 type = { fg = "orange", modifiers = ["italic"] }
-"type.builtin" = { fg = "orange", modifiers = ["italic"] }
 "type.enum.variant" = { fg = "orange" }
 constructor = { fg = "orange" }
 "variable.parameter" = { fg = "orange", modifiers = ["italic"] }
 
 constant = { fg = "purple" }
-"constant.builtin" = { fg = "purple" }
 variable = { fg = "fg" }
 "variable.builtin" = { fg = "variable-builtin", modifiers = ["italic"] }
-"variable.other.member" = { fg = "fg" }
 label = { fg = "blue" }
 namespace = { fg = "fg" }
 
 comment = { fg = "comment", modifiers = ["italic"] }
-"comment.block.documentation" = { fg = "comment", modifiers = ["italic"] }
-"comment.line.documentation" = { fg = "comment", modifiers = ["italic"] }
 
 "markup.bold" = { modifiers = ["bold"] }
 "markup.italic" = { modifiers = ["italic"] }
@@ -127,36 +101,36 @@ hint = { fg = "hint" }
 "ui.bufferline.active" = { fg = "fg", bg = "bg", underline = { color = "light-green", style = "line" } }
 
 [palette]
-orange           = "#eabc77" # logo orange — types, parameters
-yellow           = "#e0db77" # logo gold — strings
-light-green      = "#95d776" # glowing hand green — functions
-aqua             = "#639dd8" # electric tube blue — keywords, operators
-teal             = "#658ec0" # slate blue — markup, hints
-cyan             = "#98c1ea" # sky cyan — builtins
-blue             = "#85bbed" # bright tube blue — UI accents, labels
-purple           = "#9f70d8" # softened violet — constants, headings
-magenta          = "#e48db4" # sarcophagus pink — select mode
-comment          = "#6a75ab" # muted blue shading
-black            = "#202b52" # raised surface blue
-variable-builtin = "#e0db77" # this/self — as VS Code variable.language
+orange           = "#eabc77"
+yellow           = "#e0db77"
+light-green      = "#95d776"
+aqua             = "#639dd8"
+teal             = "#658ec0"
+cyan             = "#98c1ea"
+blue             = "#85bbed"
+purple           = "#9f70d8"
+magenta          = "#e48db4"
+comment          = "#6a75ab"
+black            = "#202b52"
+variable-builtin = "#e0db77"
 
-add              = "#95d776" # as VS Code gitDecoration.added
-change           = "#98c1ea" # as VS Code gitDecoration.modified
-delete           = "#e2876b" # as VS Code gitDecoration.deleted
+add              = "#95d776"
+change           = "#98c1ea"
+delete           = "#e2876b"
 
-error            = "#e2876b" # as VS Code editorError
-info             = "#98c1ea" # as VS Code editorInfo
+error            = "#e2876b"
+info             = "#98c1ea"
 hint             = "#658ec0"
 
-fg               = "#d3e0f0" # pale blue highlight white
+fg               = "#d3e0f0"
 fg-dark          = "#b0c0db"
-fg-gutter        = "#2c3250" # whitespace marks — flattened editorWhitespace
-fg-linenr        = "#6a75ab" # as VS Code editorLineNumber
-fg-selected      = "#1b2556" # menu selection bg — as VS Code list selection
+fg-gutter        = "#2c3250"
+fg-linenr        = "#6a75ab"
+fg-selected      = "#1b2556"
 border           = "#0b1029"
 border-highlight = "#639dd8"
-bg               = "#141b3d" # hangar deep blue
-bg-inlay         = "#18204a" # flattened list.focusBackground
-bg-selection     = "#293d70" # selection lifted toward tube blue for visibility
-bg-menu          = "#0e1430" # statusline, popups
+bg               = "#141b3d"
+bg-inlay         = "#18204a"
+bg-selection     = "#293d70"
+bg-menu          = "#0e1430"
 bg-focus         = "#242f63"

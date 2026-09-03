@@ -1,37 +1,6 @@
-# rust-in-peace-dawn-patrol — a Ptyxis palette from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/ptyxis.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-#
-# The 16 ANSI slots plus background/foreground/cursor and the titlebar
-# pair. [Light] and [Dark] share one block — this is a light theme
-# under either appearance.
+# rust-in-peace-dawn-patrol — generated; do not edit. Rebuild via `just build-ports`.
 [Palette]
 Name=Rust in Peace Dawn Patrol
-
-[Light]
-Background=#d9e1f2
-Foreground=#2f3d5c
-Cursor=#2f3d5c
-TitlebarBackground=#bfcce8
-TitlebarForeground=#2f3d5c
-Color0=#3a4763
-Color1=#b03911
-Color2=#297112
-Color3=#815a03
-Color4=#712ae5
-Color5=#b83d78
-Color6=#0765a6
-Color7=#c3cde3
-Color8=#606e94
-Color9=#db5123
-Color10=#419c24
-Color11=#b3800e
-Color12=#9769e3
-Color13=#ca5890
-Color14=#1587d5
-Color15=#f4f7fc
-
-[Dark]
 Background=#d9e1f2
 Foreground=#2f3d5c
 Cursor=#2f3d5c

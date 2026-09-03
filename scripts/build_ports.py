@@ -9,11 +9,13 @@ four flavors land in a single JSON.
 
 Unlike dist/, the ports/ outputs are committed — users copy them straight
 from the repo — so CI rebuilds them and fails if they've gone stale relative
-to the palettes.
+to the palettes. ports/ is cleared first, same contract as dist/: a renamed
+or removed flavor must not leave a stale file behind.
 """
 
 from __future__ import annotations
 
+import shutil
 from collections.abc import Callable
 from typing import NamedTuple
 
@@ -43,6 +45,9 @@ TARGETS = [
 
 def main() -> None:
     """Render every target theme, in all four flavors, into ports/."""
+    shutil.rmtree(PORTS_DIR, ignore_errors=True)
+    PORTS_DIR.mkdir()
+
     all_flavors = flavors()
     for target in TARGETS:
         for flavor in all_flavors:
