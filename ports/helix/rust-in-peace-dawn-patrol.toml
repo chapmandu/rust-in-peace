@@ -6,11 +6,12 @@
 #   keywords / operators / delimiters / tags = electric tube blue
 #   functions / decorators = glow green      strings  = logo gold
 #   types / parameters     = logo orange     constants = violet
-#   builtins               = sky cyan        comments  = muted blue
+#   builtins / function.builtin = sky cyan   comments = muted blue
+#   this/self (variable.builtin) = logo gold italic
 # The theme is standalone — markup, diagnostics, and the full UI layer are
-# defined below. Every colour in [palette] derives from the shared source of
-# truth: identity slots map straight to it (diffs and diagnostics follow the
-# VSCode theme's UI elements), Helix-only shades via declared mix formulas.
+# defined below. Every colour in [palette] derives from the shared role
+# table (scripts/roles.py); diffs and diagnostics follow the VS Code
+# theme's UI elements. Helix-only shades use declared mix formulas.
 
 keyword = { fg = "aqua" }
 "keyword.control" = { fg = "aqua" }
@@ -46,7 +47,7 @@ constructor = { fg = "orange" }
 constant = { fg = "purple" }
 "constant.builtin" = { fg = "purple" }
 variable = { fg = "fg" }
-"variable.builtin" = { fg = "cyan", modifiers = ["italic"] }
+"variable.builtin" = { fg = "variable-builtin", modifiers = ["italic"] }
 "variable.other.member" = { fg = "fg" }
 label = { fg = "blue" }
 namespace = { fg = "fg" }
@@ -137,6 +138,7 @@ purple           = "#712ae5" # softened violet — constants, headings
 magenta          = "#b83d78" # sarcophagus pink — select mode
 comment          = "#606e94" # muted blue shading
 black            = "#ced8ee" # raised surface blue
+variable-builtin = "#815a03" # this/self — as VS Code variable.language
 
 add              = "#297112" # as VS Code gitDecoration.added
 change           = "#0d66a1" # as VS Code gitDecoration.modified

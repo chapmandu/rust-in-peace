@@ -7,11 +7,14 @@ lightenings, and the hand-designed light palette (Dawn Patrol).
 
 Design: `{{group.key}}` placeholders are substituted textually *before* YAML
 parsing, so the source stays plain YAML and a 2-hex alpha suffix can ride
-directly on a placeholder. The custom `!alpha [colour, aa]` tag covers the
+directly on a placeholder. Role names from scripts/roles.py (`{{builtin}}`,
+`{{variable.builtin}}`) resolve through the shared table first; anything
+else is a palette path. The custom `!alpha [colour, aa]` tag covers the
 anchor-aliased cases. Colours mapped to null are stripped after parsing —
-they fall through to VS Code's defaults. Missing palette paths fail the
-build loudly; structural parity between the two palettes is asserted by
-tests/test_palette.py.
+they fall through to VS Code's defaults. The emitted JSON is only a theme
+(`name`, `type` from flavor.appearance, `semanticHighlighting`, `colors`,
+`tokenColors`). Missing palette paths fail the build loudly; structural
+parity between the two palettes is asserted by tests/test_palette.py.
 """
 
 from __future__ import annotations
@@ -22,12 +25,18 @@ from typing import Any
 import yaml
 
 from scripts.palette import SRC_DIR, Palette, resolve_palette_path
+from scripts.roles import ROLES
 from scripts.variants import Flavor, flavors
 
 type Theme = dict[str, Any]
-"""A parsed VS Code colour theme (name, colors, tokenColors, ...)."""
+"""A parsed VS Code colour theme (name, type, colors, tokenColors, ...)."""
 
 _PLACEHOLDER_RE = re.compile(r"\{\{\s*([\w.]+)\s*\}\}")
+
+# Keys that belong in a VS Code colour theme. Everything else in the YAML
+# (anchors dump, author, maintainers, $schema, semanticClass) is source
+# metadata and is dropped before the JSON is written.
+_THEME_KEYS = ("semanticHighlighting", "colors", "tokenColors")
 
 
 class ThemeLoader(yaml.SafeLoader):
@@ -44,11 +53,19 @@ ThemeLoader.add_constructor("!alpha", _alpha)
 
 
 def apply_palette(source: str, palette: Palette) -> str:
-    """Substitute `{{group.key}}` placeholders in the YAML source with palette colours.
+    """Substitute `{{group.key}}` / `{{role}}` placeholders with palette colours.
 
-    Any trailing characters (e.g. a 2-hex alpha suffix) are preserved.
+    Role names from scripts/roles.py win; anything else is a dotted palette
+    path. Any trailing characters (e.g. a 2-hex alpha suffix) are preserved.
     """
-    return _PLACEHOLDER_RE.sub(lambda match: resolve_palette_path(palette, match.group(1)), source)
+
+    def replacer(match: re.Match[str]) -> str:
+        key = match.group(1)
+        role = ROLES.get(key)
+        path = role.path if role is not None else key
+        return resolve_palette_path(palette, path)
+
+    return _PLACEHOLDER_RE.sub(replacer, source)
 
 
 def build_theme(theme_yaml: str, palette: Palette) -> Theme:
@@ -59,7 +76,7 @@ def build_theme(theme_yaml: str, palette: Palette) -> Theme:
     )
     # Colours mapped to null (or empty) fall through to VS Code's defaults.
     theme["colors"] = {key: value for key, value in theme["colors"].items() if value}
-    return theme
+    return {key: theme[key] for key in _THEME_KEYS if key in theme}
 
 
 def generate() -> list[tuple[Flavor, Theme]]:
@@ -68,7 +85,10 @@ def generate() -> list[tuple[Flavor, Theme]]:
 
     themes: list[tuple[Flavor, Theme]] = []
     for flavor in flavors():
-        theme = build_theme(theme_yaml, flavor.palette)
-        theme["name"] = flavor.label
+        theme: Theme = {
+            "name": flavor.label,
+            "type": flavor.appearance,
+            **build_theme(theme_yaml, flavor.palette),
+        }
         themes.append((flavor, theme))
     return themes

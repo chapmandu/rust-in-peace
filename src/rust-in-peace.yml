@@ -5,24 +5,26 @@ maintainers:
   - Adam Chapman <adam.p.chapman@gmail.com>
 semanticClass: theme.rustInPeace
 semanticHighlighting: true
-# Colours resolve from the single source of truth in src/palette.json via
-# double-brace "group.key" placeholders (see scripts/generate.py). An optional
-# 2-hex suffix appends an alpha channel. Anchors below stay app-agnostic; this
-# file is just the VS Code target's mapping of the palette onto VS Code keys.
+# Colours resolve from src/palette.json via double-brace placeholders
+# (see scripts/generate.py). Role names ({{builtin}}, {{keyword}}, …) go
+# through scripts/roles.py; dotted paths ({{syntax.info}}, {{bg.base}})
+# hit the palette directly. An optional 2-hex suffix appends an alpha
+# channel. Anchors stay app-agnostic; this file maps them onto VS Code keys.
+# BLUE stays {{syntax.info}} — the diagnostic "info" role is CYAN / builtin.
 rustInPeace:
   base:
     - &BG        '{{bg.base}}'
     - &FG        '{{fg.base}}'
     - &SELECTION '{{bg.selection}}'
     - &COMMENT   '{{fg.comment}}'
-    - &CYAN      '{{syntax.builtin}}'
+    - &CYAN      '{{builtin}}'
     - &BLUE      '{{syntax.info}}'
-    - &TEAL      '{{syntax.keyword}}'
-    - &GREEN     '{{syntax.function}}'
-    - &YELLOW    '{{syntax.string}}'
-    - &ORANGE    '{{syntax.type}}'
-    - &RED       '{{syntax.error}}'
-    - &PURPLE    '{{syntax.constant}}'
+    - &TEAL      '{{keyword}}'
+    - &GREEN     '{{function}}'
+    - &YELLOW    '{{string}}'
+    - &ORANGE    '{{type}}'
+    - &RED       '{{error}}'
+    - &PURPLE    '{{constant}}'
   ansi:
     - &COLOR0        '{{ansi.black}}'
     - &COLOR1        '{{ansi.red}}'
@@ -600,7 +602,7 @@ tokenColors:
     - variable.other.readwrite.instance.ruby                # ruby's "@" instance symbol
     - variable.parameter.function.language.special          # Special words as parameters
     settings:
-      foreground: *YELLOW
+      foreground: '{{variable.builtin}}'
       fontStyle: italic
 
   - name: Inherited classes

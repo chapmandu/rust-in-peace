@@ -8,9 +8,9 @@ file carries all four flavors.
 
 Design: UI surfaces resolve once into named semantic aliases (bg, chrome,
 elevated, active, ...) that the style map reuses, so each VS Code-equivalence
-decision is made in exactly one place. Syntax highlighting is declared by
-palette role in SYNTAX and expanded scope-by-scope; git-status tokens expand
-through one helper.
+decision is made in exactly one place. Syntax and git-status colours come
+from the shared role table (scripts/roles.py) so modified / info / builtin
+/ variable.builtin cannot drift from VS Code or Helix.
 """
 
 from __future__ import annotations
@@ -20,6 +20,8 @@ from dataclasses import dataclass
 from typing import Any
 
 from scripts.palette import Palette, resolve_palette_path
+from scripts.roles import BLUE, COMMENT, CYAN, GREEN, ORANGE, PURPLE, RED, TEAL, YELLOW
+from scripts.roles import ROLES as THEME_ROLES
 from scripts.variants import Flavor
 
 
@@ -39,7 +41,7 @@ class SyntaxGroup:
 # builtins/links = cyan, comments = muted blue.
 SYNTAX = [
     SyntaxGroup(
-        color="syntax.keyword",
+        color=TEAL,
         scopes=[
             "keyword",
             "keyword.conditional",
@@ -66,10 +68,9 @@ SYNTAX = [
         ],
     ),
     SyntaxGroup(
-        color="syntax.function",
+        color=GREEN,
         scopes=[
             "function",
-            "function.builtin",
             "function.call",
             "function.decorator",
             "function.macro",
@@ -81,7 +82,11 @@ SYNTAX = [
         ],
     ),
     SyntaxGroup(
-        color="syntax.string",
+        color=THEME_ROLES["function.builtin"].path,
+        scopes=["function.builtin"],
+    ),
+    SyntaxGroup(
+        color=YELLOW,
         scopes=[
             "string",
             "string.regex",
@@ -96,7 +101,7 @@ SYNTAX = [
         ],
     ),
     SyntaxGroup(
-        color="syntax.type",
+        color=ORANGE,
         scopes=[
             "type",
             "type.builtin",
@@ -111,34 +116,38 @@ SYNTAX = [
         ],
     ),
     SyntaxGroup(
-        color="syntax.type",
+        color=ORANGE,
         font_style="italic",
         scopes=["parameter", "variable.parameter"],
     ),
     SyntaxGroup(
-        color="syntax.constant",
+        color=PURPLE,
         scopes=["constant", "constant.builtin", "boolean", "number", "number.float", "float"],
     ),
     SyntaxGroup(
-        color="syntax.builtin",
+        color=CYAN,
         scopes=["preproc", "link_text", "link_uri", "string.special.url"],
     ),
     SyntaxGroup(
-        color="syntax.info",
+        color=BLUE,
         scopes=["comment.note", "comment.hint"],
     ),
     SyntaxGroup(
-        color="syntax.error",
+        color=RED,
         scopes=[
             "diff.minus",
             "comment.error",
             "variable.special",
-            "variable.builtin",
             "keyword.debug",
         ],
     ),
     SyntaxGroup(
-        color="fg.comment",
+        color=THEME_ROLES["variable.builtin"].path,
+        font_style="italic" if THEME_ROLES["variable.builtin"].italic else None,
+        scopes=["variable.builtin"],
+    ),
+    SyntaxGroup(
+        color=COMMENT,
         scopes=["comment", "comment.doc", "comment.documentation", "predoc", "tag.doctype"],
     ),
     SyntaxGroup(
@@ -163,21 +172,13 @@ SYNTAX = [
             "embedded",
         ],
     ),
-    SyntaxGroup(color="syntax.string", font_style="italic", scopes=["emphasis"]),
-    SyntaxGroup(color="syntax.type", font_weight=700, scopes=["emphasis.strong"]),
-    SyntaxGroup(color="syntax.constant", font_weight=700, scopes=["title"]),
+    SyntaxGroup(color=YELLOW, font_style="italic", scopes=["emphasis"]),
+    SyntaxGroup(color=ORANGE, font_weight=700, scopes=["emphasis.strong"]),
+    SyntaxGroup(color=PURPLE, font_weight=700, scopes=["title"]),
 ]
 
 # The translucent editor accents, led by green — the VS Code active accent.
-ACCENTS = [
-    "syntax.function",
-    "syntax.type",
-    "syntax.string",
-    "syntax.builtin",
-    "syntax.constant",
-    "syntax.error",
-    "syntax.info",
-]
+ACCENTS = [GREEN, ORANGE, YELLOW, CYAN, PURPLE, RED, BLUE]
 
 
 def _style(palette: Palette) -> dict[str, Any]:
@@ -199,8 +200,8 @@ def _style(palette: Palette) -> dict[str, Any]:
     muted = col("fg.comment")  #       dim text/icons, scrollbar hover
     fg = col("fg.base")
     subtext = col("fg.muted")
-    accent = col("syntax.function")  # active UI accent — green, as in VS Code
-    link = col("syntax.builtin")  #    links & highlights — cyan, as in VS Code
+    accent = col(GREEN)  # active UI accent — green, as in VS Code
+    link = col(CYAN)  #    links & highlights — cyan, as in VS Code
     git_border = active  #             border around git-status callouts
 
     syntax = {
@@ -322,36 +323,36 @@ def _style(palette: Palette) -> dict[str, Any]:
         "terminal.ansi.bright_white": col("ansi.brightWhite"),
         "terminal.ansi.dim_white": None,
         "link_text.hover": link,
-        **status_entries("conflict", "syntax.constant"),
-        **status_entries("created", "syntax.function"),
-        **status_entries("deleted", "syntax.error"),
-        **status_entries("error", "syntax.error"),
+        **status_entries("conflict", PURPLE),
+        **status_entries("created", GREEN),
+        **status_entries("deleted", RED),
+        **status_entries("error", RED),
         **status_entries("hidden", "fg.muted"),
-        **status_entries("hint", "fg.comment"),
-        **status_entries("ignored", "fg.comment"),
-        **status_entries("info", "syntax.info"),
-        **status_entries("modified", "syntax.type"),
-        **status_entries("predictive", "fg.comment"),
-        **status_entries("renamed", "syntax.function"),
-        **status_entries("success", "syntax.function"),
-        **status_entries("unreachable", "syntax.error"),
-        **status_entries("warning", "syntax.type"),
-        "version_control.added": col("syntax.function"),
+        **status_entries("hint", COMMENT),
+        **status_entries("ignored", COMMENT),
+        **status_entries("info", THEME_ROLES["info"].path),
+        **status_entries("modified", THEME_ROLES["modified"].path),
+        **status_entries("predictive", COMMENT),
+        **status_entries("renamed", GREEN),
+        **status_entries("success", GREEN),
+        **status_entries("unreachable", RED),
+        **status_entries("warning", ORANGE),
+        "version_control.added": col(GREEN),
         "version_control.added_background": bg,
-        "version_control.conflict": col("syntax.constant"),
+        "version_control.conflict": col(PURPLE),
         "version_control.conflict_background": bg,
-        "version_control.deleted": col("syntax.error"),
+        "version_control.deleted": col(RED),
         "version_control.deleted_background": bg,
-        "version_control.ignored": col("fg.comment"),
-        "version_control.modified": col("syntax.type"),
+        "version_control.ignored": col(COMMENT),
+        "version_control.modified": col(THEME_ROLES["modified"].path),
         "version_control.modified_background": bg,
-        "version_control.renamed": col("syntax.info"),
+        "version_control.renamed": col(BLUE),
         "players": [
             {
                 "cursor": accent,
                 "background": accent,
                 # Teal wash, matching VS Code's selection.
-                "selection": col("syntax.keyword", "3d"),
+                "selection": col(TEAL, "3d"),
             }
         ],
         "syntax": syntax,

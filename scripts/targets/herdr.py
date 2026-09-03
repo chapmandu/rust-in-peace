@@ -16,6 +16,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from scripts.palette import resolve_palette_path
+from scripts.roles import BLUE, GREEN, ORANGE, PURPLE, RED, TEAL, YELLOW, role_path
 from scripts.variants import Flavor
 
 
@@ -30,7 +31,7 @@ class Token:
 
 # Order follows herdr's own struct.
 TOKENS = [
-    Token("accent", "syntax.keyword", "primary accent — tube blue, the theme signature"),
+    Token("accent", TEAL, "primary accent — tube blue, the theme signature"),
     Token("panel_bg", "bg.chrome", "tab + status bar band — VS Code's tab-strip chrome"),
     Token("surface0", "bg.overlay", "raised surface — selected rows, inactive tab chips"),
     Token("surface1", "ui.button", "highest surface — VS Code button blue"),
@@ -39,13 +40,13 @@ TOKENS = [
     Token("overlay1", "fg.muted", "brighter UI lines"),
     Token("text", "fg.base", "primary text"),
     Token("subtext0", "fg.muted", "secondary text"),
-    Token("mauve", "syntax.constant", "softened violet — constants"),
-    Token("green", "syntax.function", "glowing hand green"),
-    Token("yellow", "syntax.string", "logo gold"),
-    Token("red", "syntax.error", "rust / logo-edge red"),
-    Token("blue", "syntax.info", "bright tube blue"),
-    Token("teal", "syntax.builtin", "sky cyan"),
-    Token("peach", "syntax.type", "logo orange"),
+    Token("mauve", PURPLE, "softened violet — constants"),
+    Token("green", GREEN, "glowing hand green"),
+    Token("yellow", YELLOW, "logo gold"),
+    Token("red", RED, "rust / logo-edge red"),
+    Token("blue", BLUE, "bright tube blue"),
+    Token("teal", role_path("builtin"), "sky cyan"),
+    Token("peach", ORANGE, "logo orange"),
 ]
 
 HEADER = """\
