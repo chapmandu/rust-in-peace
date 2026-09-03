@@ -349,7 +349,7 @@ colors:
   statusBar.background: *STATUS_BAR_BG                                               # Standard Status Bar background color
   statusBar.foreground: *FG                                                     # Status Bar foreground color
   statusBar.debuggingBackground: *RED                                           # Status Bar background color when a program is being debugged
-  statusBar.debuggingForeground: *STATUS_BAR_BG                                      # Status Bar foreground color when a program is being debugged
+  statusBar.debuggingForeground: *BG                                                     # Status Bar foreground color when a program is being debugged
   statusBar.noFolderBackground: *STATUS_BAR_BG                                       # Status Bar background color when no folder is opened
   statusBar.noFolderForeground: *FG                                             # Status Bar foreground color when no folder is opened
   statusBarItem.activeBackground:                                               # Status Bar item background color when clicking
