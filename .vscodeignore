@@ -18,7 +18,6 @@ ports/**
 .editorconfig
 .gitignore
 .prettierrc.toml
-INSTALL.md
 justfile
 mise.toml
 pyproject.toml

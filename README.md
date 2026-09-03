@@ -20,7 +20,7 @@
 
 ## Colour Palette
 
-The complete palette, including ANSI terminal colours, lives in [`src/palette.json`](https://github.com/chapmandu/rust-in-peace/blob/main/src/palette.json) — the single source of truth the VS Code theme, its lighter variants, and everything below are generated from at build time.
+The complete palettes, including ANSI terminal colours, live in [`src/palette.json`](https://github.com/chapmandu/rust-in-peace/blob/main/src/palette.json) (dark) and [`src/palette-light.json`](https://github.com/chapmandu/rust-in-peace/blob/main/src/palette-light.json) (Dawn Patrol).
 
 <!-- GENERATED PALETTE START (npm run build — do not edit by hand) -->
 <div align="center">
@@ -63,13 +63,13 @@ Install straight from the [**Visual Studio Marketplace**](https://marketplace.vi
 1. Open the **Extensions** sidebar in VS Code — `View → Extensions`
 2. Search for `Megadeth` _(curse you, rust-lang!!!)_
 3. Click **Install**
-4. `Code → Preferences → Color Theme → ` **Rust in Peace** — or one of its lighter variants, **Hangar 18** (a subtle lift) and **Polaris** (lighter still), or **Dawn Patrol**, the light theme
+4. `Preferences: Color Theme` (or `File → Preferences → Theme → Color Theme`) and pick **Rust in Peace**, **Rust in Peace Hangar 18**, **Rust in Peace Polaris**, or **Rust in Peace Dawn Patrol**
 
 <br/>
 
 ## Companion themes
 
-The VS Code theme isn't the only target. [`src/palette.json`](https://github.com/chapmandu/rust-in-peace/blob/main/src/palette.json) is the single source of truth, and matching themes for other tools are generated from it into [`ports/`](https://github.com/chapmandu/rust-in-peace/tree/main/ports). Every target ships all four variants — core, Hangar 18, Polaris, and Dawn Patrol (light) — as separate files, except Zed, whose single file is a theme family carrying all four:
+The VS Code theme isn't the only target. Matching themes for other tools are generated into [`ports/`](https://github.com/chapmandu/rust-in-peace/tree/main/ports). Every target ships all four variants — core, Hangar 18, Polaris, and Dawn Patrol (light) — as separate files, except Zed, whose single file is a theme family carrying all four:
 
 | Tool                                               | Generated files                                                                                                          |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -93,11 +93,11 @@ To work on the theme:
 
 1. Clone this repo and open it in VS Code
 2. Open `View → Run`
-3. Click **Launch Extension** — this opens a second VS Code window
+3. Click **Launch Theme** (or **Launch Theme (with extensions)**) — this opens a second VS Code window
 4. Target scopes with the **Developer: Inspect Editor Tokens and Scopes** command
 5. Edit `src/rust-in-peace.yml` and run `npm run build`; changes appear live in the window from step 3
 
-Colours live in `src/palette.json`; `src/rust-in-peace.yml` maps them onto VS Code keys via `{{group.key}}` placeholders. Edit the palette to shift a colour everywhere at once.
+Colours live in `src/palette.json` and `src/palette-light.json`; `src/rust-in-peace.yml` maps them onto VS Code keys via `{{group.key}}` placeholders. Edit the palette to shift a colour everywhere at once.
 
 > Please include **before & after** screenshots of your changes in pull requests.
 
@@ -111,24 +111,13 @@ Local tasks run through [`just`](https://github.com/casey/just) — run `just` t
 | Recipe               | Purpose                                                      |
 | -------------------- | ------------------------------------------------------------ |
 | `just check`         | Run the full code-quality suite (lint, types, tests + coverage, dead code, duplication, secrets) |
-| `just build`         | Regenerate the theme JSON from the YAML source               |
+| `just build`         | Regenerate theme JSON, companion ports, and README art       |
 | `just build-ports`  | Regenerate the companion themes (Helix, Herdr, Zed, Zellij, Ptyxis) |
 | `just install`       | Build, package, and install the extension into local VS Code |
 | `just publish-patch` | Bump the patch version, tag, and push to publish             |
 | `just publish-minor` | Bump the minor version, tag, and push to publish             |
 
-### Manual publishing
-
-`just publish-patch` / `just publish-minor` cover steps 1–5 below; run them by hand if you'd rather not use `just`.
-
-1. Bump the version in `package.json`
-2. `git commit -m 'Fire'` — commit the changes
-3. `git tag v2.0.666` — tag the commit with the version number
-4. `git push origin --tags` — push the tag
-5. `git push` — push the changes
-6. Create a [release](https://github.com/chapmandu/rust-in-peace/releases) on GitHub with the same version number
-7. GitHub Actions publishes the extension to the marketplace
-8. Profit!
+A tag push drafts a [release](https://github.com/chapmandu/rust-in-peace/releases); publishing the draft deploys to the Marketplace.
 
 </details>
 
