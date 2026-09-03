@@ -57,7 +57,7 @@ secrets:
 
 # Run the full code-quality suite
 [group('code quality')]
-check: fix ruff typecheck test lint deadcode dupes secrets
+check: ruff typecheck test lint deadcode dupes secrets
 
 # Generate the theme JSONs, README sections and artwork, and downstream ports
 [group('build')]
