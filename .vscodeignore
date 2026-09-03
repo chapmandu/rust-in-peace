@@ -17,7 +17,6 @@ ports/**
 **/__pycache__/**
 .editorconfig
 .gitignore
-.prettierrc.toml
 INSTALL.md
 justfile
 mise.toml
