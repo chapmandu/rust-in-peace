@@ -135,10 +135,10 @@
         "ignored": "#6570a8",
         "ignored.background": "#101530",
         "ignored.border": "#202a58",
-        "info": "#84bef5",
+        "info": "#99c5f0",
         "info.background": "#101530",
         "info.border": "#202a58",
-        "modified": "#f2c074",
+        "modified": "#99c5f0",
         "modified.background": "#101530",
         "modified.border": "#202a58",
         "predictive": "#6570a8",
@@ -163,7 +163,7 @@
         "version_control.deleted": "#eb8667",
         "version_control.deleted_background": "#101530",
         "version_control.ignored": "#6570a8",
-        "version_control.modified": "#f2c074",
+        "version_control.modified": "#99c5f0",
         "version_control.modified_background": "#101530",
         "version_control.renamed": "#84bef5",
         "players": [
@@ -289,11 +289,6 @@
             "font_style": null,
             "font_weight": null
           },
-          "function.builtin": {
-            "color": "#95de73",
-            "font_style": null,
-            "font_weight": null
-          },
           "function.call": {
             "color": "#95de73",
             "font_style": null,
@@ -331,6 +326,11 @@
           },
           "diff.plus": {
             "color": "#95de73",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.builtin": {
+            "color": "#99c5f0",
             "font_style": null,
             "font_weight": null
           },
@@ -519,14 +519,14 @@
             "font_style": null,
             "font_weight": null
           },
-          "variable.builtin": {
+          "keyword.debug": {
             "color": "#eb8667",
             "font_style": null,
             "font_weight": null
           },
-          "keyword.debug": {
-            "color": "#eb8667",
-            "font_style": null,
+          "variable.builtin": {
+            "color": "#e8e274",
+            "font_style": "italic",
             "font_weight": null
           },
           "comment": {
@@ -789,10 +789,10 @@
         "ignored": "#6a75ab",
         "ignored.background": "#141b3d",
         "ignored.border": "#242f63",
-        "info": "#85bbed",
+        "info": "#98c1ea",
         "info.background": "#141b3d",
         "info.border": "#242f63",
-        "modified": "#eabc77",
+        "modified": "#98c1ea",
         "modified.background": "#141b3d",
         "modified.border": "#242f63",
         "predictive": "#6a75ab",
@@ -817,7 +817,7 @@
         "version_control.deleted": "#e2876b",
         "version_control.deleted_background": "#141b3d",
         "version_control.ignored": "#6a75ab",
-        "version_control.modified": "#eabc77",
+        "version_control.modified": "#98c1ea",
         "version_control.modified_background": "#141b3d",
         "version_control.renamed": "#85bbed",
         "players": [
@@ -943,11 +943,6 @@
             "font_style": null,
             "font_weight": null
           },
-          "function.builtin": {
-            "color": "#95d776",
-            "font_style": null,
-            "font_weight": null
-          },
           "function.call": {
             "color": "#95d776",
             "font_style": null,
@@ -985,6 +980,11 @@
           },
           "diff.plus": {
             "color": "#95d776",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.builtin": {
+            "color": "#98c1ea",
             "font_style": null,
             "font_weight": null
           },
@@ -1173,14 +1173,14 @@
             "font_style": null,
             "font_weight": null
           },
-          "variable.builtin": {
+          "keyword.debug": {
             "color": "#e2876b",
             "font_style": null,
             "font_weight": null
           },
-          "keyword.debug": {
-            "color": "#e2876b",
-            "font_style": null,
+          "variable.builtin": {
+            "color": "#e0db77",
+            "font_style": "italic",
             "font_weight": null
           },
           "comment": {
@@ -1443,10 +1443,10 @@
         "ignored": "#707aae",
         "ignored.background": "#1a224e",
         "ignored.border": "#293671",
-        "info": "#87b7e5",
+        "info": "#98bee2",
         "info.background": "#1a224e",
         "info.border": "#293671",
-        "modified": "#e1b87a",
+        "modified": "#98bee2",
         "modified.background": "#1a224e",
         "modified.border": "#293671",
         "predictive": "#707aae",
@@ -1471,7 +1471,7 @@
         "version_control.deleted": "#d98970",
         "version_control.deleted_background": "#1a224e",
         "version_control.ignored": "#707aae",
-        "version_control.modified": "#e1b87a",
+        "version_control.modified": "#98bee2",
         "version_control.modified_background": "#1a224e",
         "version_control.renamed": "#87b7e5",
         "players": [
@@ -1597,11 +1597,6 @@
             "font_style": null,
             "font_weight": null
           },
-          "function.builtin": {
-            "color": "#95cf79",
-            "font_style": null,
-            "font_weight": null
-          },
           "function.call": {
             "color": "#95cf79",
             "font_style": null,
@@ -1639,6 +1634,11 @@
           },
           "diff.plus": {
             "color": "#95cf79",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.builtin": {
+            "color": "#98bee2",
             "font_style": null,
             "font_weight": null
           },
@@ -1827,14 +1827,14 @@
             "font_style": null,
             "font_weight": null
           },
-          "variable.builtin": {
+          "keyword.debug": {
             "color": "#d98970",
             "font_style": null,
             "font_weight": null
           },
-          "keyword.debug": {
-            "color": "#d98970",
-            "font_style": null,
+          "variable.builtin": {
+            "color": "#d8d37a",
+            "font_style": "italic",
             "font_weight": null
           },
           "comment": {
@@ -2097,10 +2097,10 @@
         "ignored": "#606e94",
         "ignored.background": "#d9e1f2",
         "ignored.border": "#bbc9e8",
-        "info": "#0765a6",
+        "info": "#0d66a1",
         "info.background": "#d9e1f2",
         "info.border": "#bbc9e8",
-        "modified": "#9c4c07",
+        "modified": "#0d66a1",
         "modified.background": "#d9e1f2",
         "modified.border": "#bbc9e8",
         "predictive": "#606e94",
@@ -2125,7 +2125,7 @@
         "version_control.deleted": "#b03911",
         "version_control.deleted_background": "#d9e1f2",
         "version_control.ignored": "#606e94",
-        "version_control.modified": "#9c4c07",
+        "version_control.modified": "#0d66a1",
         "version_control.modified_background": "#d9e1f2",
         "version_control.renamed": "#0765a6",
         "players": [
@@ -2251,11 +2251,6 @@
             "font_style": null,
             "font_weight": null
           },
-          "function.builtin": {
-            "color": "#297112",
-            "font_style": null,
-            "font_weight": null
-          },
           "function.call": {
             "color": "#297112",
             "font_style": null,
@@ -2293,6 +2288,11 @@
           },
           "diff.plus": {
             "color": "#297112",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.builtin": {
+            "color": "#0d66a1",
             "font_style": null,
             "font_weight": null
           },
@@ -2481,14 +2481,14 @@
             "font_style": null,
             "font_weight": null
           },
-          "variable.builtin": {
+          "keyword.debug": {
             "color": "#b03911",
             "font_style": null,
             "font_weight": null
           },
-          "keyword.debug": {
-            "color": "#b03911",
-            "font_style": null,
+          "variable.builtin": {
+            "color": "#815a03",
+            "font_style": "italic",
             "font_weight": null
           },
           "comment": {

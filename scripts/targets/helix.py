@@ -7,10 +7,9 @@ mirroring the VS Code theme's token philosophy.
 Design: the output has two layers. The ROLES block is static text — theme
 roles reference palette *names* ("aqua", "orange"), so it never changes with
 the source palette. The [palette] block beneath it defines those names, and
-every one derives from the shared palette: identity colours resolve from
-palette paths (diff and diagnostic slots take the VS Code theme's colour for
-the equivalent UI element), while Helix-only shades are declared mix
-formulas over palette anchors (scripts/color.py).
+every one derives from the shared role table (scripts/roles.py) or a mix
+formula over palette anchors (scripts/color.py). Diff and diagnostic slots
+take the VS Code theme's colour for the equivalent UI element.
 """
 
 from __future__ import annotations
@@ -19,7 +18,25 @@ from dataclasses import dataclass
 
 from scripts.color import ColorFn, mixed
 from scripts.palette import resolve_palette_path
+from scripts.roles import BLUE, GREEN, ORANGE, PURPLE, RED, TEAL, YELLOW, Role, role_path
+from scripts.roles import ROLES as THEME_ROLES
 from scripts.variants import Flavor
+
+
+def _scope_style(palette_name: str, role: Role) -> str:
+    """Render a Helix `{ fg = "name", ... }` style from a shared role."""
+    parts = [f'fg = "{palette_name}"']
+    if role.italic:
+        parts.append('modifiers = ["italic"]')
+    return "{ " + ", ".join(parts) + " }"
+
+
+# function.builtin / variable.builtin are driven by the shared role table so
+# italic and colour stay aligned with VS Code (support.function / this/self).
+_FN_BUILTIN = f'"function.builtin" = {_scope_style("cyan", THEME_ROLES["function.builtin"])}'
+_VAR_BUILTIN = (
+    f'"variable.builtin" = {_scope_style("variable-builtin", THEME_ROLES["variable.builtin"])}'
+)
 
 # Static: roles reference the palette names defined in the [palette] block below.
 ROLES = (
@@ -39,7 +56,9 @@ special = { fg = "aqua" }
 "constant.character.escape" = { fg = "aqua" }
 
 function = { fg = "light-green" }
-"function.builtin" = { fg = "cyan" }
+"""
+    + _FN_BUILTIN
+    + """
 "function.macro" = { fg = "light-green" }
 "function.special" = { fg = "cyan" }
 attribute = { fg = "light-green", modifiers = ["italic"] }
@@ -58,7 +77,9 @@ constructor = { fg = "orange" }
 constant = { fg = "purple" }
 "constant.builtin" = { fg = "purple" }
 variable = { fg = "fg" }
-"variable.builtin" = { fg = "cyan", modifiers = ["italic"] }
+"""
+    + _VAR_BUILTIN
+    + """
 "variable.other.member" = { fg = "fg" }
 label = { fg = "blue" }
 namespace = { fg = "fg" }
@@ -159,32 +180,37 @@ class Entry:
 
 BLANK = None  # a blank line, preserving the grouping in the output
 
-# Diagnostic hints and the teal slot share one slate blue: info sunk toward
-# the selection surface.
-SLATE = mixed("bg.selection", "syntax.info", 0.70)
+# Diagnostic hints and the teal slot share one slate blue: BLUE sunk toward
+# the selection surface (palette syntax.info, not the diagnostic info role).
+SLATE = mixed("bg.selection", BLUE, 0.70)
 
 # Helix's named colours, grouped as in the output (BLANK = blank line).
 # Slots with a VS Code UI equivalent take that element's colour; the rest
 # derive from the semantically-nearest palette anchors.
 PALETTE: list[Entry | None] = [
-    Entry("orange", "syntax.type", "logo orange — types, parameters"),
-    Entry("yellow", "syntax.string", "logo gold — strings"),
-    Entry("light-green", "syntax.function", "glowing hand green — functions"),
-    Entry("aqua", "syntax.keyword", "electric tube blue — keywords, operators"),
+    Entry("orange", ORANGE, "logo orange — types, parameters"),
+    Entry("yellow", YELLOW, "logo gold — strings"),
+    Entry("light-green", GREEN, "glowing hand green — functions"),
+    Entry("aqua", TEAL, "electric tube blue — keywords, operators"),
     Entry("teal", SLATE, "slate blue — markup, hints"),
-    Entry("cyan", "syntax.builtin", "sky cyan — builtins"),
-    Entry("blue", "syntax.info", "bright tube blue — UI accents, labels"),
-    Entry("purple", "syntax.constant", "softened violet — constants, headings"),
+    Entry("cyan", role_path("builtin"), "sky cyan — builtins"),
+    Entry("blue", BLUE, "bright tube blue — UI accents, labels"),
+    Entry("purple", PURPLE, "softened violet — constants, headings"),
     Entry("magenta", "ansi.magenta", "sarcophagus pink — select mode"),
     Entry("comment", "fg.comment", "muted blue shading"),
     Entry("black", "bg.surface", "raised surface blue"),
+    Entry(
+        "variable-builtin",
+        role_path("variable.builtin"),
+        "this/self — as VS Code variable.language",
+    ),
     BLANK,
-    Entry("add", "syntax.function", "as VS Code gitDecoration.added"),
-    Entry("change", "syntax.builtin", "as VS Code gitDecoration.modified"),
-    Entry("delete", "syntax.error", "as VS Code gitDecoration.deleted"),
+    Entry("add", GREEN, "as VS Code gitDecoration.added"),
+    Entry("change", role_path("modified"), "as VS Code gitDecoration.modified"),
+    Entry("delete", RED, "as VS Code gitDecoration.deleted"),
     BLANK,
-    Entry("error", "syntax.error", "as VS Code editorError"),
-    Entry("info", "syntax.builtin", "as VS Code editorInfo"),
+    Entry("error", RED, "as VS Code editorError"),
+    Entry("info", role_path("info"), "as VS Code editorInfo"),
     Entry("hint", SLATE),
     BLANK,
     Entry("fg", "fg.base", "pale blue highlight white"),
@@ -218,11 +244,12 @@ HEADER = """\
 #   keywords / operators / delimiters / tags = electric tube blue
 #   functions / decorators = glow green      strings  = logo gold
 #   types / parameters     = logo orange     constants = violet
-#   builtins               = sky cyan        comments  = muted blue
+#   builtins / function.builtin = sky cyan   comments = muted blue
+#   this/self (variable.builtin) = logo gold italic
 # The theme is standalone — markup, diagnostics, and the full UI layer are
-# defined below. Every colour in [palette] derives from the shared source of
-# truth: identity slots map straight to it (diffs and diagnostics follow the
-# VSCode theme's UI elements), Helix-only shades via declared mix formulas."""
+# defined below. Every colour in [palette] derives from the shared role
+# table (scripts/roles.py); diffs and diagnostics follow the VS Code
+# theme's UI elements. Helix-only shades use declared mix formulas."""
 
 
 def generate(flavor: Flavor) -> str:

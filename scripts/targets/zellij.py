@@ -19,6 +19,7 @@ emphasis_0 the shortcut character, emphasis_3 the bell-flash foreground.
 from __future__ import annotations
 
 from scripts.palette import Palette, hex_to_rgb, resolve_palette_path
+from scripts.roles import BLUE, GREEN, ORANGE, PURPLE, RED, TEAL, YELLOW
 from scripts.variants import Flavor
 
 # A Zellij colour value: a palette path (`syntax.info`), or 0 — Zellij's
@@ -33,10 +34,10 @@ type Style = dict[str, Ref]
 TEXT: Style = {
     "base": "fg.base",
     "background": "bg.sunken",
-    "emphasis_0": "syntax.type",
-    "emphasis_1": "syntax.info",
-    "emphasis_2": "syntax.function",
-    "emphasis_3": "syntax.constant",
+    "emphasis_0": ORANGE,
+    "emphasis_1": BLUE,
+    "emphasis_2": GREEN,
+    "emphasis_3": PURPLE,
 }
 
 # Selected rows: TEXT lifted onto the VS Code list-selection surface.
@@ -49,7 +50,7 @@ COMPONENTS: dict[str, Style] = {
     # Active tab / active mode pill: VS Code's green active-tab accent.
     "ribbon_selected": {
         "base": "bg.base",  # navy text on the green pill
-        "background": "syntax.function",  # glow green — as VS Code tab.activeBorderTop
+        "background": GREEN,  # glow green — as VS Code tab.activeBorderTop
         "emphasis_0": "ui.statusBar",  # shortcut char in the selected pill
         "emphasis_1": "bg.base",
         "emphasis_2": "bg.base",
@@ -59,59 +60,59 @@ COMPONENTS: dict[str, Style] = {
     "ribbon_unselected": {
         "base": "fg.comment",  # muted comment blue — quiet inactive labels
         "background": "bg.panel",  # as VS Code tab.inactiveBackground
-        "emphasis_0": "syntax.string",  # gold shortcut chars
+        "emphasis_0": YELLOW,  # gold shortcut chars
         "emphasis_1": "bg.surface",  # hover / alternate-tab background — a subtle lift
         "emphasis_2": "fg.muted",
-        "emphasis_3": "syntax.error",  # bell-flash fg
+        "emphasis_3": RED,  # bell-flash fg
     },
     "table_title": {
-        "base": "syntax.info",
+        "base": BLUE,
         "background": 0,
-        "emphasis_0": "syntax.type",
-        "emphasis_1": "syntax.info",
-        "emphasis_2": "syntax.function",
-        "emphasis_3": "syntax.constant",
+        "emphasis_0": ORANGE,
+        "emphasis_1": BLUE,
+        "emphasis_2": GREEN,
+        "emphasis_3": PURPLE,
     },
     "table_cell_selected": SELECTED,
     "table_cell_unselected": TEXT,
     "list_selected": SELECTED,
     "list_unselected": TEXT,
     "frame_selected": {
-        "base": "syntax.keyword",
+        "base": TEAL,
         "background": 0,
-        "emphasis_0": "syntax.type",
-        "emphasis_1": "syntax.info",
-        "emphasis_2": "syntax.constant",
+        "emphasis_0": ORANGE,
+        "emphasis_1": BLUE,
+        "emphasis_2": PURPLE,
         "emphasis_3": 0,
     },
     "frame_unselected": {
         "base": "fg.comment",  # muted UI-line blue, as VS Code's focusBorder family
         "background": 0,
-        "emphasis_0": "syntax.type",
-        "emphasis_1": "syntax.info",
-        "emphasis_2": "syntax.constant",
-        "emphasis_3": "syntax.constant",
+        "emphasis_0": ORANGE,
+        "emphasis_1": BLUE,
+        "emphasis_2": PURPLE,
+        "emphasis_3": PURPLE,
     },
     "frame_highlight": {
-        "base": "syntax.type",
+        "base": ORANGE,
         "background": 0,
-        "emphasis_0": "syntax.constant",
-        "emphasis_1": "syntax.type",
-        "emphasis_2": "syntax.type",
-        "emphasis_3": "syntax.type",
+        "emphasis_0": PURPLE,
+        "emphasis_1": ORANGE,
+        "emphasis_2": ORANGE,
+        "emphasis_3": ORANGE,
     },
     "exit_code_success": {
-        "base": "syntax.function",
+        "base": GREEN,
         "background": 0,
-        "emphasis_0": "syntax.info",
+        "emphasis_0": BLUE,
         "emphasis_1": "bg.surface",
-        "emphasis_2": "syntax.constant",
+        "emphasis_2": PURPLE,
         "emphasis_3": "fg.comment",
     },
     "exit_code_error": {
-        "base": "syntax.error",
+        "base": RED,
         "background": 0,
-        "emphasis_0": "syntax.string",
+        "emphasis_0": YELLOW,
         "emphasis_1": 0,
         "emphasis_2": 0,
         "emphasis_3": 0,
@@ -120,13 +121,13 @@ COMPONENTS: dict[str, Style] = {
 
 # The ten multiplayer cursor colours, in slot order (0 = no colour).
 MULTIPLAYER: list[Ref] = [
-    "syntax.constant",  # player_1
-    "syntax.info",  # player_2
+    PURPLE,  # player_1
+    BLUE,  # player_2
     0,  # player_3
-    "syntax.string",  # player_4
-    "syntax.function",  # player_5
+    YELLOW,  # player_4
+    GREEN,  # player_5
     0,  # player_6
-    "syntax.error",  # player_7
+    RED,  # player_7
     0,  # player_8
     0,  # player_9
     0,  # player_10

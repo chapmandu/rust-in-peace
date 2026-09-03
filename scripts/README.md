@@ -60,16 +60,27 @@ keeps every accent at least as readable against the new background as it was
 against the old one (capped at the WCAG 4.5:1 target). Every build enumerates
 `flavors()`, which is what keeps all targets shipping the same four themes.
 
+**Roles** (`roles.py`). The YAML colour anchors (`CYAN` = builtin, `YELLOW` =
+string, …) and the editor-facing meanings of those anchors (`modified` and
+`info` are both `CYAN`, `variable.builtin` is `YELLOW` italic) live in one
+table. `generate.py` and every `scripts/targets/*` port import it, so a
+palette tweak cannot make Helix / Zed / VS Code disagree on those roles.
+The diagnostic `info` role is `CYAN` (`syntax.builtin`), matching
+`editorInfo.foreground` — not the `BLUE` / `syntax.info` palette slot.
+
 **The VS Code mapping** (`generate.py` → `build.py`). `src/rust-in-peace.yml` maps
 palette colours onto VS Code theme keys exactly once. Colours appear as
-`{{group.key}}` placeholders that are substituted *textually* before the YAML is
-parsed — that keeps the source plain YAML and lets a 2-hex alpha suffix ride
-directly on a placeholder (`'{{bg.selection}}80'`). A custom `!alpha` tag covers
-the cases where the colour comes through a YAML anchor instead. Keys mapped to
+`{{role}}` or `{{group.key}}` placeholders that are substituted *textually*
+before the YAML is parsed — role names go through `roles.py` first; dotted
+paths hit the palette. A 2-hex alpha suffix can ride directly on a
+placeholder (`'{{bg.selection}}80'`). A custom `!alpha` tag covers the
+cases where the colour comes through a YAML anchor instead. Keys mapped to
 `null` are stripped after parsing and fall through to VS Code's defaults.
-`build.py` clears `dist/` and writes one JSON per flavor, then refreshes the
-README. `dist/` is gitignored but packaged wholesale into the `.vsix`, hence the
-clear-first: a renamed flavor must not leave a stale JSON behind to ship.
+The emitted JSON is only a theme: `name`, `type` (from `flavor.appearance`),
+`semanticHighlighting`, `colors`, `tokenColors`. `build.py` clears `dist/`
+and writes one JSON per flavor, then refreshes the README. `dist/` is
+gitignored but packaged wholesale into the `.vsix`, hence the clear-first:
+a renamed flavor must not leave a stale JSON behind to ship.
 
 **Downstream targets** (`build_ports.py` + `targets/`). Each module in
 `scripts/targets/` knows one application's theme format and exposes
@@ -88,10 +99,11 @@ repo — so CI rebuilds them and fails if they've drifted from the palettes.
 If you edit a palette or a target module, rerun the build and commit the
 regenerated files.
 
-Targets reference colours as palette paths wherever possible. The few
-tool-specific shades with no palette slot are declared as mix formulas over
-palette anchors (`color.py`'s `mixed(path_a, path_b, t)`), so palette edits still
-propagate and no hex literal lives outside `src/`.
+Targets resolve semantic colours through `scripts/roles.py` and otherwise
+use palette paths. The few tool-specific shades with no palette slot are
+declared as mix formulas over palette anchors (`color.py`'s
+`mixed(path_a, path_b, t)`), so palette edits still propagate and no hex
+literal lives outside `src/`.
 
 **README art** (`readme.py`). Run as part of `build.py`. Each flavor is rendered
 as a miniature editor window — a deterministic SVG assembled from f-strings, with
@@ -126,5 +138,7 @@ in `package.json`'s `contributes.themes` so VS Code offers it.
 
 `just test` runs the unit tests in `tests/`, covering palette parity between the
 dark and light sources, placeholder resolution, the variant transforms (including
-the contrast guard), colour mixing, and the README splicing. The wider
-`just check` adds ruff, mypy, dead-code and duplication checks on this package.
+the contrast guard), colour mixing, the README splicing, and a snapshot that
+generates all four flavors in-process and asserts Helix / Zed / Ptyxis / VS
+Code (and herdr) agree on the locked role hexes. The wider `just check` adds
+ruff, mypy, dead-code and duplication checks on this package.
