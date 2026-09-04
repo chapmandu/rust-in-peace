@@ -117,7 +117,7 @@ Local tasks run through [`just`](https://github.com/casey/just) — run `just` t
 | `just publish-patch` | Bump the patch version, tag, and push to publish             |
 | `just publish-minor` | Bump the minor version, tag, and push to publish             |
 
-A tag push drafts a [release](https://github.com/chapmandu/rust-in-peace/releases); publishing the draft deploys to the Marketplace.
+A tag push drafts a [release](https://github.com/chapmandu/rust-in-peace/releases); publishing the draft deploys the release VSIX to the Marketplace. Global Azure DevOps PATs stop working 1 Dec 2026; confirm the `VSCE_PAT` repo secret is org-scoped or replace it before then.
 
 </details>
 
