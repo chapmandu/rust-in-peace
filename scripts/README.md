@@ -115,8 +115,9 @@ markers is hand-edited.
 
 **Lint** (`lint.py`). `just lint` checks the theme's colour keys against the
 [VS Code theme-color reference](https://code.visualstudio.com/api/references/theme-color)
-(network-dependent). Keys the theme sets that the reference no longer lists fail
-the run; keys left to VS Code's defaults are reported as informational.
+(network-dependent; scraped from the markdown source). Keys the theme sets that
+the reference no longer lists fail the run; keys left to VS Code's defaults
+are a single INFO count (`--verbose` lists them).
 
 ## Common changes
 
