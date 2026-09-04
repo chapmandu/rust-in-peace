@@ -15,20 +15,11 @@ jobs:
         with:
           # Full history — gitleaks scans every commit, not just the tip.
           fetch-depth: 0
-      # Installs the toolchain pinned in mise.toml (node, uv, just, gitleaks).
+      # Installs the toolchain pinned in mise.toml (python, node, uv, just, gitleaks).
       - uses: jdx/mise-action@v4.3.0
       - run: uv sync
       - run: npm ci
-      - run: uv run ruff check scripts tests
-      - run: uv run ruff format --check scripts tests
-      - run: uv run mypy
-      # Coverage gate comes from addopts in pyproject.toml.
-      - run: uv run pytest
-      - run: uv run vulture
-      - run: npm run dupes
-      - run: gitleaks git --redact --no-banner
-      # Checks theme keys against the VS Code reference; fails on network error (network-dependent).
-      - run: uv run python -m scripts.lint
+      - run: just check
       - run: uv run python -m scripts.build
       - run: uv run python -m scripts.build_ports
       # Fail if the committed downstream themes or generated README sections
