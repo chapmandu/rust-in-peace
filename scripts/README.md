@@ -65,8 +65,6 @@ string, …) and the editor-facing meanings of those anchors (`modified` and
 `info` are both `CYAN`, `variable.builtin` is `YELLOW` italic) live in one
 table. `generate.py` and every `scripts/targets/*` port import it, so a
 palette tweak cannot make Helix / Zed / VS Code disagree on those roles.
-The diagnostic `info` role is `CYAN` (`syntax.builtin`), matching
-`editorInfo.foreground` — not the `BLUE` / `syntax.info` palette slot.
 
 **The VS Code mapping** (`generate.py` → `build.py`). `src/rust-in-peace.yml` maps
 palette colours onto VS Code theme keys exactly once. Colours appear as

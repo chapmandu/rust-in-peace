@@ -1,24 +1,7 @@
-"""Lighter variants of the base palette.
+"""Lighter variants of the dark palette.
 
-The formula lifts a dark palette toward a lighter sibling in two moves:
-
-- Neutrals get a lightness lift that tapers to zero as base lightness rises,
-  so dark surfaces rise the most and text barely moves.
-- Accents are desaturated (proportionally) and the brightest ones darkened
-  slightly, so they don't glare against the lighter ground.
-
-Design: a variant is four numbers in a VariantSpec; `transform_palette` routes
-each palette group to one of three colour transforms — neutral lift (bg/fg and
-neutral ANSI), accent mute (syntax and coloured ANSI), chrome lift+desat (ui)
-— and rebuilds the same nested structure. The accent mute is guarded so no
-accent ends up with less contrast against the new background than it had
-originally, capped at the WCAG 4.5:1 target. All colour maths runs through
-coloraide in HSL.
-
-`flavors()` is the canonical list of the four themes — core, the lighter
-variants, and the Dawn Patrol light theme — each as a Flavor binding a name
-to its resolved palette. Every build (VS Code, downstream targets, README)
-enumerates it.
+A VariantSpec drives three HSL transforms: tapered lightness lift for neutrals,
+desaturate-and-darken for accents (contrast-guarded), and both for UI chrome.
 """
 
 from __future__ import annotations
@@ -123,7 +106,6 @@ def _lift(spec: VariantSpec, hex_colour: str) -> str:
     """Tapered lightness lift: strongest on dark surfaces, ~zero by the text end."""
 
     def mutate(hsl: list[float]) -> None:
-        """Raise lightness by the tapered lift."""
         hsl[2] += max(0.0, spec.lift_a - spec.lift_b * hsl[2] * 100) / 100
 
     return _with_hsl(hex_colour, mutate)
@@ -138,12 +120,10 @@ def _mute(spec: VariantSpec, orig_bg: str, new_bg: str, hex_colour: str) -> str:
     """
 
     def mutate(hsl: list[float]) -> None:
-        """Cut saturation; darken only the brightest."""
         hsl[1] -= spec.desat * hsl[1]
         hsl[2] -= (spec.darken * max(0.0, (hsl[2] * 100 - 50) / 38)) / 100
 
     def lighten(hsl: list[float]) -> None:
-        """Nudge lightness up one step, for the contrast guard."""
         hsl[2] += 0.01
 
     floor = min(contrast(hex_colour, orig_bg), _ACCENT_MIN_CONTRAST)
@@ -160,7 +140,6 @@ def _lift_and_desat(spec: VariantSpec, hex_colour: str) -> str:
     """Chrome rises in step with the surfaces without getting louder."""
 
     def mutate(hsl: list[float]) -> None:
-        """Raise lightness by the tapered lift; cut saturation."""
         hsl[2] += max(0.0, spec.lift_a - spec.lift_b * hsl[2] * 100) / 100
         hsl[1] -= spec.desat * hsl[1]
 

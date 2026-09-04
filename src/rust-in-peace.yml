@@ -10,7 +10,6 @@ semanticHighlighting: true
 # through scripts/roles.py; dotted paths ({{syntax.info}}, {{bg.base}})
 # hit the palette directly. An optional 2-hex suffix appends an alpha
 # channel. Anchors stay app-agnostic; this file maps them onto VS Code keys.
-# BLUE stays {{syntax.info}} — the diagnostic "info" role is CYAN / builtin.
 rustInPeace:
   base:
     - &BG        '{{bg.base}}'
@@ -45,7 +44,7 @@ rustInPeace:
   other:
     - &LineHighlight '{{bg.selection}}80'
     - &NonText       '{{fg.ink}}1A'              # structural ink overlay: white on dark, navy on light
-    - &INK           '{{fg.ink}}'                # structural ink overlay: white on dark, navy on light
+    - &INK           '{{fg.ink}}'
     - &TAB_DROP_BG   '{{bg.selection}}70'
     # Deep tube blue — a saturated hangar blue dark enough for white button text.
     - &BUTTON_BG     '{{ui.button}}'
@@ -196,10 +195,6 @@ colors:
 
   editorCodeLens.foreground: *COMMENT
 
-  # NOTE: These are not set because they tend to be highly contested from
-  # person to person. Thus, setting these is probably better suited
-  # for workbench.colorCustomizations in User Settings
-
   editorBracketHighlight.foreground1: *FG
   editorBracketHighlight.foreground2: *TEAL
   editorBracketHighlight.foreground3: *CYAN
@@ -294,7 +289,7 @@ colors:
   statusBarItem.remoteForeground: *BUTTON_FG
   statusBarItem.remoteBackground: *BUTTON_BG
 
-  # Title Bar Colors (MacOS Only)
+  # Title Bar Colors
   titleBar.activeBackground: *PANEL_BG
   titleBar.activeForeground: *FG
   titleBar.inactiveBackground: *CHROME_BG

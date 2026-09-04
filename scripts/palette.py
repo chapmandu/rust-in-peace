@@ -1,16 +1,4 @@
-"""Palette loading and lookup.
-
-src/palette.json is the single source of truth: nested groups of semantic
-colours (bg, fg, ui, syntax, ansi) holding #rrggbb values. Generators resolve
-colours through dotted paths like `syntax.keyword`, so a palette edit
-propagates to every target on the next build. palette-light.json carries the
-same structure for the light theme; tests/test_palette.py asserts the parity
-(the builds themselves fail loudly on any missing path they actually use).
-
-Design: a palette stays a plain nested dict (the recursive `Palette` alias)
-rather than a class — consumers only read paths from it, and
-`resolve_palette_path` fails loudly on any path that doesn't land on a colour.
-"""
+"""Load src/ palette JSON and resolve dotted colour paths."""
 
 from __future__ import annotations
 

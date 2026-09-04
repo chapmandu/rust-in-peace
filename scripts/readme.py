@@ -173,7 +173,6 @@ def render_window(palette: Palette, label: str) -> str:
     """Render one theme as a miniature editor window (deterministic SVG)."""
 
     def colour(path: str) -> str:
-        """Resolve a palette path to its hex colour."""
         return resolve_palette_path(palette, path)
 
     parts = [
@@ -265,11 +264,9 @@ def badges(palette: Palette) -> str:
     """
 
     def tint(path: str) -> str:
-        """Resolve a palette path to bare hex (no '#') for badge URLs."""
         return resolve_palette_path(palette, path)[1:]
 
     def badgen(kind: str, label: str, color: str) -> str:
-        """One badgen.net marketplace badge, tinted from the palette."""
         return (
             f"[![{label}](https://flat.badgen.net/vs-marketplace/{kind}/chapmandu.rust-in-peace"
             f"?label={label.lower()}&labelColor={tint('bg.sunken')}&color={color})]({MARKETPLACE_URL})"
@@ -317,7 +314,6 @@ def palette_block(themes: list[Flavor]) -> str:
     """Render the palette section: album cover and the theme grid, dark to light."""
 
     def cell(theme: Flavor) -> str:
-        """One grid cell: the theme's short name above its swatch image."""
         swatch_url = f"{REPO_RAW}/assets/generated/{theme.slug}.png"
         label = theme.label.removeprefix("Rust in Peace ")
         return (

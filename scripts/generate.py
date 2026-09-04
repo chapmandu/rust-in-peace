@@ -1,20 +1,7 @@
-"""Generate the VS Code themes from src/rust-in-peace.yml and the palettes.
+"""Resolve src/rust-in-peace.yml placeholders against a flavor palette.
 
-The YAML source maps palette colours onto VS Code theme keys exactly once;
-every theme is that one mapping resolved against a different flavor's palette
-(variants.flavors()): the hand-designed dark palette, its formulaic
-lightenings, and the hand-designed light palette (Dawn Patrol).
-
-Design: `{{group.key}}` placeholders are substituted textually *before* YAML
-parsing, so the source stays plain YAML and a 2-hex alpha suffix can ride
-directly on a placeholder. Role names from scripts/roles.py (`{{builtin}}`,
-`{{variable.builtin}}`) resolve through the shared table first; anything
-else is a palette path. The custom `!alpha [colour, aa]` tag covers the
-anchor-aliased cases. Colours mapped to null are stripped after parsing —
-they fall through to VS Code's defaults. The emitted JSON is only a theme
-(`name`, `type` from flavor.appearance, `semanticHighlighting`, `colors`,
-`tokenColors`). Missing palette paths fail the build loudly; structural
-parity between the two palettes is asserted by tests/test_palette.py.
+Role names go through scripts/roles.py; dotted paths hit the palette.
+`!alpha [colour, aa]` covers anchor-aliased cases. Null colours are stripped.
 """
 
 from __future__ import annotations

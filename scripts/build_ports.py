@@ -1,17 +1,4 @@
-"""Entry point: build the downstream editor/terminal themes into ports/.
-
-Run as `python -m scripts.build_ports` (wrapped by `just build-ports`,
-and run by `just build`). Each Target pairs an output directory/extension with a
-generator from scripts/targets/, rendered once per flavor (core, the lighter
-variants, Dawn Patrol) so every target ships the same four themes as the VS
-Code build. Zed is the one exception: its format is a theme family, so all
-four flavors land in a single JSON.
-
-Unlike dist/, the ports/ outputs are committed — users copy them straight
-from the repo — so CI rebuilds them and fails if they've gone stale relative
-to the palettes. ports/ is cleared first, same contract as dist/: a renamed
-or removed flavor must not leave a stale file behind.
-"""
+"""Write ports/ for every registered target; Zed is one family JSON."""
 
 from __future__ import annotations
 
