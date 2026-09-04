@@ -1,6 +1,6 @@
 # Toolchain pins — local dev and CI (jdx/mise-action) install from here.
 [tools]
-node = "26" # vsce, prettier 
+node = "26" # vsce
 uv = "0.11" # Python + script dependencies (see pyproject.toml)
 just = "1" # task runner (justfile)
 gitleaks = "8" # secret scanning (just secrets)
