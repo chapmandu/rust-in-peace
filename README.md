@@ -92,10 +92,11 @@ To add another target, drop a generator in `scripts/targets/` and register it in
 To work on the theme:
 
 1. Clone this repo and open it in VS Code
-2. Open `View → Run`
-3. Click **Launch Theme** (or **Launch Theme (with extensions)**) — this opens a second VS Code window
-4. Target scopes with the **Developer: Inspect Editor Tokens and Scopes** command
-5. Edit `src/rust-in-peace.yml` and run `npm run build`; changes appear live in the window from step 3
+2. Run `just setup` (or `mise install`, `uv sync`, and `npm ci`) to provision the toolchain
+3. Open `View → Run`
+4. Click **Launch Theme** (or **Launch Theme (with extensions)**) — this opens a second VS Code window
+5. Target scopes with the **Developer: Inspect Editor Tokens and Scopes** command
+6. Edit `src/rust-in-peace.yml` and run `npm run build`; changes appear live in the window from step 4
 
 Colours live in `src/palette.json` and `src/palette-light.json`; `src/rust-in-peace.yml` maps them onto VS Code keys via `{{group.key}}` placeholders. Edit the palette to shift a colour everywhere at once.
 
@@ -110,6 +111,7 @@ Local tasks run through [`just`](https://github.com/casey/just) — run `just` t
 
 | Recipe               | Purpose                                                      |
 | -------------------- | ------------------------------------------------------------ |
+| `just setup`         | Provision the toolchain (mise) and install Python/npm dependencies |
 | `just check`         | Run the full code-quality suite (lint, types, tests + coverage, dead code, duplication, secrets) |
 | `just build`         | Regenerate theme JSON, companion ports, and README art       |
 | `just build-ports`  | Regenerate the companion themes (Helix, Herdr, Zed, Zellij, Ptyxis) |
