@@ -38,6 +38,8 @@ convention = "pep257"
 [tool.ruff.lint.per-file-ignores]
 # SVG/markdown templating reads better as whole-tag lines.
 "scripts/readme.py" = ["E501"]
+# Nested helpers and private build wiring don't need restating docstrings.
+"scripts/**" = ["D1"]
 # Test names document themselves; asserts are the pytest idiom and literal
 # expected values in assertions are self-documenting.
 "tests/*" = ["D1", "S101", "PLR2004"]

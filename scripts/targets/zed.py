@@ -188,7 +188,6 @@ def _style(palette: Palette) -> dict[str, Any]:
     """Build one flavor's style map from its palette."""
 
     def col(path: str, alpha: str = "") -> str:
-        """Resolve a palette path to hex, with an optional 2-hex alpha suffix."""
         return resolve_palette_path(palette, path) + alpha
 
     # Semantic aliases for the UI surfaces.

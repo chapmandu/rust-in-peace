@@ -1,13 +1,4 @@
-"""Entry point: build the VS Code theme JSONs into dist/.
-
-Run as `python -m scripts.build` (wrapped by `npm run build` / `just build`,
-and by vsce's vscode:prepublish hook). Writes one JSON per flavor, then
-refreshes the README's swatch art and generated sections (readme.py).
-
-dist/ is gitignored but packaged wholesale into the vsix from the working
-tree, so the directory is cleared first — a renamed or removed flavor must
-not leave a stale JSON behind to ship.
-"""
+"""Write dist/*.json for every flavor, then refresh the README art."""
 
 from __future__ import annotations
 
