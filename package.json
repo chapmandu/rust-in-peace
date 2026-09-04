@@ -9,6 +9,12 @@
   },
   "publisher": "chapmandu",
   "license": "MIT",
+  "files": [
+    "dist",
+    "assets/logo.png",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/chapmandu/rust-in-peace"
