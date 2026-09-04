@@ -1,9 +1,9 @@
 """Ptyxis `.palette` file.
 
 The 16 ANSI slots plus background/foreground/cursor and the titlebar pair in
-Ptyxis's palette INI format. Ptyxis expects both [Light] and [Dark] sections,
-so the same colour block is emitted twice — each flavor keeps its own
-appearance under either.
+Ptyxis's palette INI format. Each flavor is one appearance, so the file is a
+single-scheme palette: colours live under `[Palette]` and `[Light]`/`[Dark]`
+are omitted.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from scripts.variants import Flavor
 
 
 def _scheme(palette: Palette) -> list[str]:
-    """Build the shared `[Light]`/`[Dark]` colour block (Ptyxis wants both)."""
+    """Build the single-scheme colour block under `[Palette]`."""
     return [
         f"Background={resolve_palette_path(palette, 'bg.base')}",
         f"Foreground={resolve_palette_path(palette, 'fg.base')}",
@@ -27,31 +27,17 @@ def _scheme(palette: Palette) -> list[str]:
     ]
 
 
-HEADER = """\
-# {slug} — a Ptyxis palette from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/ptyxis.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-#
-# The 16 ANSI slots plus background/foreground/cursor and the titlebar
-# pair. [Light] and [Dark] share one block — this is a {appearance} theme
-# under either appearance."""
+HEADER = "# {slug} — generated; do not edit. Rebuild via `just build-ports`."
 
 
 def generate(flavor: Flavor) -> str:
     """Generate the Ptyxis `.palette` file for one flavor."""
-    block = _scheme(flavor.palette)
-    header = HEADER.format(slug=flavor.slug, appearance=flavor.appearance)
     return "\n".join(
         [
-            header,
+            HEADER.format(slug=flavor.slug),
             "[Palette]",
             f"Name={flavor.label}",
-            "",
-            "[Light]",
-            *block,
-            "",
-            "[Dark]",
-            *block,
+            *_scheme(flavor.palette),
             "",
         ]
     )

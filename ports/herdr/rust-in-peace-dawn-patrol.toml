@@ -1,34 +1,22 @@
-# rust-in-peace-dawn-patrol — a herdr theme from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/herdr.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-# Merge this into your herdr config: https://herdr.dev/docs/configuration/#theme
-#
-# Recolours the tokyo-night-day base theme via [theme.custom] overrides; any token
-# not set here falls through to tokyo-night-day. The accent is the cover's electric
-# tube blue (the theme signature); panel_bg takes VS Code's tab-strip
-# chrome, sitting sunken below content.
-# Tip: set panel_bg = "reset" to let panels follow your terminal background.
-# Note: [theme.custom] is a single global block, so herdr's appearance
-# auto-switch ([theme] dark_name/light_name) can't pair two flavors — merge
-# the overrides of just one.
+# rust-in-peace-dawn-patrol — generated; do not edit. Rebuild via `just build-ports`.
 
 [theme]
 name = "tokyo-night-day"
 
 [theme.custom]
-accent      = "#0b5ad9" # primary accent — tube blue, the theme signature
-panel_bg    = "#bfcce8" # tab + status bar band — VS Code's tab-strip chrome
-surface0    = "#bbc9e8" # raised surface — selected rows, inactive tab chips
-surface1    = "#2a5ca8" # highest surface — VS Code button blue
-surface_dim = "#ced8ee" # base surface — active row, dividers, seams
-overlay0    = "#606e94" # muted UI lines, borders
-overlay1    = "#4d5e82" # brighter UI lines
-text        = "#2f3d5c" # primary text
-subtext0    = "#4d5e82" # secondary text
-mauve       = "#712ae5" # softened violet — constants
-green       = "#297112" # glowing hand green
-yellow      = "#815a03" # logo gold
-red         = "#b03911" # rust / logo-edge red
-blue        = "#0765a6" # bright tube blue
-teal        = "#0d66a1" # sky cyan
-peach       = "#9c4c07" # logo orange
+accent      = "#0b5ad9"
+panel_bg    = "#bfcce8"
+surface0    = "#bbc9e8"
+surface1    = "#2a5ca8"
+surface_dim = "#ced8ee"
+overlay0    = "#606e94"
+overlay1    = "#4d5e82"
+text        = "#2f3d5c"
+subtext0    = "#4d5e82"
+mauve       = "#712ae5"
+green       = "#297112"
+yellow      = "#815a03"
+red         = "#b03911"
+blue        = "#0765a6"
+teal        = "#0d66a1"
+peach       = "#9c4c07"
