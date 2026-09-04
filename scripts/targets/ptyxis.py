@@ -9,7 +9,7 @@ are omitted.
 from __future__ import annotations
 
 from scripts.palette import Palette, resolve_palette_path
-from scripts.roles import ANSI_SLOTS, resolve_role
+from scripts.roles import ANSI_SLOTS
 from scripts.variants import Flavor
 
 
@@ -23,7 +23,10 @@ def _scheme(palette: Palette) -> list[str]:
         # background; pin the tab strip to the shared chrome band instead.
         f"TitlebarBackground={resolve_palette_path(palette, 'bg.chrome')}",
         f"TitlebarForeground={resolve_palette_path(palette, 'fg.base')}",
-        *(f"Color{i}={resolve_role(palette, f'ansi.{slot}')}" for i, slot in enumerate(ANSI_SLOTS)),
+        *(
+            f"Color{i}={resolve_palette_path(palette, f'ansi.{slot}')}"
+            for i, slot in enumerate(ANSI_SLOTS)
+        ),
     ]
 
 

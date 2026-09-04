@@ -21,25 +21,12 @@ from typing import NamedTuple
 import resvg_py
 
 from scripts.palette import REPO_ROOT, Palette, resolve_palette_path
+from scripts.roles import ROLES
 from scripts.variants import Flavor, flavors
 
 REPO = "https://github.com/chapmandu/rust-in-peace"
 REPO_RAW = f"{REPO}/raw/main"
 MARKETPLACE_URL = "https://marketplace.visualstudio.com/items?itemName=chapmandu.rust-in-peace"
-
-
-# Short palette-role keys used by the snippet's token runs.
-ROLE_PATHS = {
-    "fg": "fg.base",
-    "cm": "fg.comment",
-    "kw": "syntax.keyword",
-    "bi": "syntax.builtin",
-    "in": "syntax.info",
-    "fn": "syntax.function",
-    "str": "syntax.string",
-    "ty": "syntax.type",
-    "ct": "syntax.constant",
-}
 
 
 class Run(NamedTuple):
@@ -50,71 +37,85 @@ class Run(NamedTuple):
     squiggle: bool = False
 
 
+def snippet_style(palette: Palette, name: str) -> tuple[str, bool]:
+    """Resolve a snippet token to ``(hex, italic)``.
+
+    Names in the shared role table (``scripts.roles.ROLES``) take colour and
+    italic from that table. Anything else is a dotted palette path with italic
+    off — the same fall-through ``apply_palette`` uses.
+    """
+    role = ROLES.get(name)
+    if role is not None:
+        return resolve_palette_path(palette, role.path), role.italic
+    return resolve_palette_path(palette, name), False
+
+
 # The demo snippet, as token runs so the same code renders in every variant's
 # colours. Each line exists to exercise a palette role; the squiggle sits under
 # "intelligence" (two words combined that can't make sense — Hangar 18).
+# Token names are shared role names or dotted palette paths — not a private map.
 SNIPPET: list[list[Run]] = [
-    [Run("//! Megadeth — Rust in Peace (1990)", "cm")],
+    [Run("//! Megadeth — Rust in Peace (1990)", "fg.comment")],
     [
-        Run("use ", "kw"),
-        Run("hangar", "bi"),
-        Run("::", "fg"),
-        Run("warhead", "bi"),
-        Run("::", "fg"),
-        Run("Polaris", "ty"),
-        Run(";", "fg"),
+        Run("use ", "keyword"),
+        Run("hangar", "builtin"),
+        Run("::", "fg.base"),
+        Run("warhead", "builtin"),
+        Run("::", "fg.base"),
+        Run("Polaris", "type"),
+        Run(";", "fg.base"),
     ],
     [
-        Run("#[military(", "in"),
-        Run("intelligence", "in", squiggle=True),
-        Run(" = ", "fg"),
-        Run("false", "ct"),
-        Run(")]", "in"),
+        Run("#[military(", "syntax.info"),
+        Run("intelligence", "syntax.info", squiggle=True),
+        Run(" = ", "fg.base"),
+        Run("false", "constant"),
+        Run(")]", "syntax.info"),
     ],
     [
-        Run("pub struct ", "kw"),
-        Run("Rattlehead", "ty"),
-        Run(" { rust_eaten: ", "fg"),
-        Run("bool", "bi"),
-        Run(" }", "fg"),
+        Run("pub struct ", "keyword"),
+        Run("Rattlehead", "type"),
+        Run(" { rust_eaten: ", "fg.base"),
+        Run("bool", "builtin"),
+        Run(" }", "fg.base"),
     ],
     [
-        Run("impl ", "kw"),
-        Run("Rattlehead", "ty"),
-        Run(" {", "fg"),
+        Run("impl ", "keyword"),
+        Run("Rattlehead", "type"),
+        Run(" {", "fg.base"),
     ],
     [
-        Run("    ", "fg"),
-        Run("pub fn ", "kw"),
-        Run("holy_wars", "fn"),
-        Run("(&", "fg"),
-        Run("self", "kw"),
-        Run(") -> ", "fg"),
-        Run("Punishment", "ty"),
-        Run(" {", "fg"),
+        Run("    ", "fg.base"),
+        Run("pub fn ", "keyword"),
+        Run("holy_wars", "function"),
+        Run("(&", "fg.base"),
+        Run("self", "variable.builtin"),
+        Run(") -> ", "fg.base"),
+        Run("Punishment", "type"),
+        Run(" {", "fg.base"),
     ],
     [
-        Run("        ", "fg"),
-        Run("let ", "kw"),
-        Run("dues = ", "fg"),
-        Run("Verse", "ty"),
-        Run("::", "fg"),
-        Run("from", "fn"),
-        Run("(", "fg"),
-        Run('"the punishment due"', "str"),
-        Run(");", "fg"),
+        Run("        ", "fg.base"),
+        Run("let ", "keyword"),
+        Run("dues = ", "fg.base"),
+        Run("Verse", "type"),
+        Run("::", "fg.base"),
+        Run("from", "function"),
+        Run("(", "fg.base"),
+        Run('"the punishment due"', "string"),
+        Run(");", "fg.base"),
     ],
     [
-        Run("        dues.", "fg"),
-        Run("punish", "fn"),
-        Run("(", "fg"),
-        Run("NUCLEAR_DAWN", "ct"),
-        Run(" * ", "fg"),
-        Run("1990", "ct"),
-        Run(")", "fg"),
+        Run("        dues.", "fg.base"),
+        Run("punish", "function"),
+        Run("(", "fg.base"),
+        Run("NUCLEAR_DAWN", "constant"),
+        Run(" * ", "fg.base"),
+        Run("1990", "constant"),
+        Run(")", "fg.base"),
     ],
-    [Run("    }", "fg")],
-    [Run("}", "fg")],
+    [Run("    }", "fg.base")],
+    [Run("}", "fg.base")],
 ]
 
 # Zero-based line index that gets the current-line highlight.
@@ -219,8 +220,10 @@ def render_window(palette: Palette, label: str) -> str:
         cursor = float(CODE_X)
         for run in runs:
             width = len(run.text) * CH
+            fill, italic = snippet_style(palette, run.role)
+            style = ' font-style="italic"' if italic else ""
             tspans.append(
-                f'<tspan x="{fmt(cursor)}" textLength="{fmt(width)}" lengthAdjust="spacingAndGlyphs" fill="{colour(ROLE_PATHS[run.role])}">{escape_xml(run.text)}</tspan>'
+                f'<tspan x="{fmt(cursor)}" textLength="{fmt(width)}" lengthAdjust="spacingAndGlyphs" fill="{fill}"{style}>{escape_xml(run.text)}</tspan>'
             )
             if run.squiggle:
                 parts.append(

@@ -38,6 +38,12 @@ def test_apply_palette_resolves_role_names() -> None:
     assert apply_palette("x: '{{variable.builtin}}'", palette) == "x: '#e8e274'"
 
 
+def test_apply_palette_ansi_is_palette_path_not_role() -> None:
+    palette: Palette = {"ansi": {"black": "#1c2547", "blue": "#9a63de"}}
+    assert apply_palette("{{ansi.black}}", palette) == "#1c2547"
+    assert apply_palette("{{ansi.blue}}", palette) == "#9a63de"
+
+
 def test_info_role_is_builtin_not_syntax_info() -> None:
     palette: Palette = {"syntax": {"builtin": "#99c5f0", "info": "#84bef5"}}
     assert apply_palette("{{info}}", palette) == "#99c5f0"
