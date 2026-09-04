@@ -37,6 +37,9 @@ RED: Final = "syntax.error"
 PURPLE: Final = "syntax.constant"
 
 # The 16 ANSI slots, in Color0..Color15 / COLOR0..COLOR15 order.
+# These are palette paths (``ansi.black``, …), not Roles — ``apply_palette``
+# already falls through unknown names, so identity Roles would be dead weight.
+# Ptyxis (and lock tests) keep this ordered list to walk Color0..Color15.
 ANSI_SLOTS: Final[tuple[str, ...]] = (
     "black",
     "red",
@@ -81,7 +84,6 @@ ROLES: Final[dict[str, Role]] = {
     "function.builtin": Role(CYAN),
     # this, super, self (`variable.language`)
     "variable.builtin": Role(YELLOW, italic=True),
-    **{f"ansi.{slot}": Role(f"ansi.{slot}") for slot in ANSI_SLOTS},
 }
 
 

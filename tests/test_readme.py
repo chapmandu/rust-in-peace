@@ -1,6 +1,8 @@
 import pytest
 
-from scripts.readme import fmt, inject, squiggle_path
+from scripts.palette import load_palette, resolve_palette_path
+from scripts.readme import SNIPPET, Run, fmt, inject, snippet_style, squiggle_path
+from scripts.roles import ROLES, resolve_role
 
 
 def test_fmt_drops_float_noise() -> None:
@@ -35,3 +37,29 @@ def test_inject_replaces_marker_region() -> None:
 def test_inject_missing_markers_raises() -> None:
     with pytest.raises(ValueError, match="missing"):
         inject("no markers here", "X", "block")
+
+
+def test_snippet_self_uses_variable_builtin() -> None:
+    self_runs = [run for line in SNIPPET for run in line if run.text == "self"]
+    assert self_runs == [Run("self", "variable.builtin")]
+
+
+def test_snippet_tokens_resolve_through_roles_or_palette() -> None:
+    palette = load_palette()
+    for line in SNIPPET:
+        for run in line:
+            fill, italic = snippet_style(palette, run.role)
+            if run.role in ROLES:
+                assert fill == resolve_role(palette, run.role)
+                assert italic == ROLES[run.role].italic
+            else:
+                assert fill == resolve_palette_path(palette, run.role)
+                assert italic is False
+
+
+def test_snippet_style_applies_variable_builtin_italic() -> None:
+    palette = load_palette()
+    fill, italic = snippet_style(palette, "variable.builtin")
+    assert italic is True
+    assert fill == resolve_role(palette, "variable.builtin")
+    assert fill != resolve_role(palette, "keyword")

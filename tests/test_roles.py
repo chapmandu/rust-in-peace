@@ -10,12 +10,12 @@ from typing import Any
 import pytest
 
 from scripts.generate import generate
-from scripts.palette import load_palette
-from scripts.roles import ROLES, resolve_role, role_path
+from scripts.palette import load_palette, resolve_palette_path
+from scripts.roles import ANSI_SLOTS, ROLES, resolve_role, role_path
 from scripts.targets import helix, herdr, ptyxis, zed, zellij
 from scripts.variants import Flavor, flavors
 
-LOCKED = ("modified", "info", "builtin", "variable.builtin", "ansi.blue")
+LOCKED = ("modified", "info", "builtin", "variable.builtin")
 
 
 def _hex(value: str) -> str:
@@ -100,15 +100,16 @@ def test_ports_agree_on_locked_roles(
     zed_hexes = {name: _hex(value) for name, value in zed_roles(zed_family, flavor.label).items()}
     ptyxis_blue = _hex(_ini_hex(ptyxis.generate(flavor), r"^Color4=(#[0-9A-Fa-f]{6})$", "Color4"))
     herdr_teal = _hex(_ini_hex(herdr.generate(flavor), r'^teal\s+=\s+"(#[0-9A-Fa-f]{6})"', "teal"))
+    ansi_blue = _hex(resolve_palette_path(flavor.palette, "ansi.blue"))
 
-    for name in ("modified", "info", "builtin", "variable.builtin"):
+    for name in LOCKED:
         assert vscode_hexes[name] == expected[name], name
         assert helix_hexes[name] == expected[name], name
         assert zed_hexes[name] == expected[name], name
 
-    assert vscode_hexes["ansi.blue"] == expected["ansi.blue"]
-    assert zed_hexes["ansi.blue"] == expected["ansi.blue"]
-    assert ptyxis_blue == expected["ansi.blue"]
+    assert vscode_hexes["ansi.blue"] == ansi_blue
+    assert zed_hexes["ansi.blue"] == ansi_blue
+    assert ptyxis_blue == ansi_blue
     assert herdr_teal == expected["builtin"]
     # Zellij has no syntax-role table; still generate so a mapping edit cannot
     # silently break the KDL renderer.
@@ -144,8 +145,18 @@ def test_role_paths_exist_in_both_palettes() -> None:
             resolve_role(palette, name)
 
 
+def test_ansi_slots_are_palette_paths_not_roles() -> None:
+    assert len(ANSI_SLOTS) == 16
+    assert all(not name.startswith("ansi.") for name in ROLES)
+    for palette in (load_palette(), load_palette("palette-light.json")):
+        for slot in ANSI_SLOTS:
+            resolve_palette_path(palette, f"ansi.{slot}")
+
+
 def test_unknown_role_raises() -> None:
     with pytest.raises(ValueError, match="unknown role"):
         role_path("nope.nothing")
     with pytest.raises(ValueError, match="unknown role"):
         resolve_role({}, "nope.nothing")
+    with pytest.raises(ValueError, match="unknown role"):
+        role_path("ansi.blue")
