@@ -1,37 +1,6 @@
-# rust-in-peace-polaris — a Ptyxis palette from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/ptyxis.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-#
-# The 16 ANSI slots plus background/foreground/cursor and the titlebar
-# pair. [Light] and [Dark] share one block — this is a dark theme
-# under either appearance.
+# rust-in-peace-polaris — generated; do not edit. Rebuild via `just build-ports`.
 [Palette]
 Name=Rust in Peace Polaris
-
-[Light]
-Background=#1a224e
-Foreground=#d3e0f0
-Cursor=#d3e0f0
-TitlebarBackground=#10173d
-TitlebarForeground=#d3e0f0
-Color0=#263361
-Color1=#d98970
-Color2=#95cf79
-Color3=#d8d37a
-Color4=#a179d0
-Color5=#dd8fb1
-Color6=#87b7e5
-Color7=#d3e0f0
-Color8=#707aae
-Color9=#e1a28e
-Color10=#acd996
-Color11=#dfdb93
-Color12=#ab88d7
-Color13=#e4a6c1
-Color14=#a0c6eb
-Color15=#eef4fb
-
-[Dark]
 Background=#1a224e
 Foreground=#d3e0f0
 Cursor=#d3e0f0

@@ -39,6 +39,9 @@ class SyntaxGroup:
 # token philosophy: keywords/operators/tags = tube blue, functions = green,
 # strings = gold, types/params = orange, constants/numbers = violet,
 # builtins/links = cyan, comments = muted blue.
+# Current Zed names (old keys no longer map): punctuation.markup, link,
+# link.url, raw — not punctuation.list_marker / link_text / link_uri /
+# text.literal.
 SYNTAX = [
     SyntaxGroup(
         color=TEAL,
@@ -96,7 +99,7 @@ SYNTAX = [
             "string.special.path",
             "string.doc",
             "string.documentation",
-            "text.literal",
+            "raw",
             "character",
         ],
     ),
@@ -126,7 +129,7 @@ SYNTAX = [
     ),
     SyntaxGroup(
         color=CYAN,
-        scopes=["preproc", "link_text", "link_uri", "string.special.url"],
+        scopes=["preproc", "link", "link.url", "string.special.url"],
     ),
     SyntaxGroup(
         color=BLUE,
@@ -157,7 +160,7 @@ SYNTAX = [
             "punctuation",
             "punctuation.bracket",
             "punctuation.delimiter",
-            "punctuation.list_marker",
+            "punctuation.markup",
             "punctuation.special",
             "module",
             "namespace",
@@ -204,15 +207,16 @@ def _style(palette: Palette) -> dict[str, Any]:
     link = col(CYAN)  #    links & highlights — cyan, as in VS Code
     git_border = active  #             border around git-status callouts
 
-    syntax = {
-        scope: {
-            "color": col(group.color),
-            "font_style": group.font_style,
-            "font_weight": group.font_weight,
-        }
-        for group in SYNTAX
-        for scope in group.scopes
-    }
+    def highlight(group: SyntaxGroup) -> dict[str, Any]:
+        """Colour plus any non-default font fields (schema defaults are null)."""
+        style: dict[str, Any] = {"color": col(group.color)}
+        if group.font_style is not None:
+            style["font_style"] = group.font_style
+        if group.font_weight is not None:
+            style["font_weight"] = group.font_weight
+        return style
+
+    syntax = {scope: highlight(group) for group in SYNTAX for scope in group.scopes}
 
     def status_entries(name: str, path: str) -> dict[str, str]:
         """Expand `<name>` to fg/background/border entries — coloured fg on the editor bg."""
@@ -263,12 +267,10 @@ def _style(palette: Palette) -> dict[str, Any]:
         "tab.active_background": bg,
         "search.match_background": active,
         "panel.background": chrome,
-        "panel.focused_border": None,
         "panel.indent_guide": active,
         "panel.indent_guide_active": muted,
         "panel.indent_guide_hover": muted,
         "panel.overlay_background": elevated,
-        "pane.focused_border": None,
         "pane_group.border": border,
         "scrollbar.thumb.background": col("bg.overlay"),
         "scrollbar.thumb.hover_background": muted,
@@ -285,7 +287,6 @@ def _style(palette: Palette) -> dict[str, Any]:
         "editor.highlighted_line.background": active,
         "editor.line_number": muted,
         "editor.active_line_number": fg,
-        "editor.invisible": None,
         "editor.wrap_guide": border_subtle,
         "editor.active_wrap_guide": border_subtle,
         "editor.document_highlight.read_background": active,
@@ -293,35 +294,28 @@ def _style(palette: Palette) -> dict[str, Any]:
         "editor.document_highlight.bracket_background": selection,
         "editor.indent_guide": active,
         "editor.indent_guide_active": muted,
+        # Omit terminal.foreground / bright_foreground / dim_foreground and
+        # every terminal.ansi.dim_* — schema default is null, and omit ≡ JSON
+        # null. Zed does not derive dim ANSI from the bright slots; missing
+        # dim keys fall through to ThemeColors::{dark,light} built-ins.
         "terminal.background": chrome,
-        "terminal.foreground": None,
         "terminal.ansi.background": chrome,
-        "terminal.bright_foreground": None,
-        "terminal.dim_foreground": None,
         "terminal.ansi.black": col("ansi.black"),
         "terminal.ansi.bright_black": col("ansi.brightBlack"),
-        "terminal.ansi.dim_black": None,
         "terminal.ansi.red": col("ansi.red"),
         "terminal.ansi.bright_red": col("ansi.brightRed"),
-        "terminal.ansi.dim_red": None,
         "terminal.ansi.green": col("ansi.green"),
         "terminal.ansi.bright_green": col("ansi.brightGreen"),
-        "terminal.ansi.dim_green": None,
         "terminal.ansi.yellow": col("ansi.yellow"),
         "terminal.ansi.bright_yellow": col("ansi.brightYellow"),
-        "terminal.ansi.dim_yellow": None,
         "terminal.ansi.blue": col("ansi.blue"),
         "terminal.ansi.bright_blue": col("ansi.brightBlue"),
-        "terminal.ansi.dim_blue": None,
         "terminal.ansi.magenta": col("ansi.magenta"),
         "terminal.ansi.bright_magenta": col("ansi.brightMagenta"),
-        "terminal.ansi.dim_magenta": None,
         "terminal.ansi.cyan": col("ansi.cyan"),
         "terminal.ansi.bright_cyan": col("ansi.brightCyan"),
-        "terminal.ansi.dim_cyan": None,
         "terminal.ansi.white": col("ansi.white"),
         "terminal.ansi.bright_white": col("ansi.brightWhite"),
-        "terminal.ansi.dim_white": None,
         "link_text.hover": link,
         **status_entries("conflict", PURPLE),
         **status_entries("created", GREEN),

@@ -1,37 +1,6 @@
-# rust-in-peace-hangar-18 — a Ptyxis palette from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/ptyxis.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-#
-# The 16 ANSI slots plus background/foreground/cursor and the titlebar
-# pair. [Light] and [Dark] share one block — this is a dark theme
-# under either appearance.
+# rust-in-peace-hangar-18 — generated; do not edit. Rebuild via `just build-ports`.
 [Palette]
 Name=Rust in Peace Hangar 18
-
-[Light]
-Background=#141b3d
-Foreground=#d3e0f0
-Cursor=#d3e0f0
-TitlebarBackground=#0b1029
-TitlebarForeground=#d3e0f0
-Color0=#202b52
-Color1=#e2876b
-Color2=#95d776
-Color3=#e0db77
-Color4=#9f70d8
-Color5=#e48db4
-Color6=#85bbed
-Color7=#d3e0f0
-Color8=#6a75ab
-Color9=#e9a38d
-Color10=#aee096
-Color11=#e6e293
-Color12=#ae86de
-Color13=#eaa8c5
-Color14=#a1caf2
-Color15=#eef4fb
-
-[Dark]
 Background=#141b3d
 Foreground=#d3e0f0
 Cursor=#d3e0f0

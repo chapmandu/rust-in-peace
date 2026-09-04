@@ -42,12 +42,6 @@ _VAR_BUILTIN = (
 ROLES = (
     """\
 keyword = { fg = "aqua" }
-"keyword.control" = { fg = "aqua" }
-"keyword.control.import" = { fg = "aqua" }
-"keyword.control.return" = { fg = "aqua" }
-"keyword.function" = { fg = "aqua" }
-"keyword.operator" = { fg = "aqua" }
-"keyword.directive" = { fg = "aqua" }
 operator = { fg = "aqua" }
 punctuation = { fg = "fg" }
 "punctuation.delimiter" = { fg = "aqua" }
@@ -59,34 +53,27 @@ function = { fg = "light-green" }
 """
     + _FN_BUILTIN
     + """
-"function.macro" = { fg = "light-green" }
 "function.special" = { fg = "cyan" }
 attribute = { fg = "light-green", modifiers = ["italic"] }
 
 string = { fg = "yellow" }
-"string.regexp" = { fg = "yellow" }
 "string.special" = { fg = "aqua" }
 "constant.character" = { fg = "yellow" }
 
 type = { fg = "orange", modifiers = ["italic"] }
-"type.builtin" = { fg = "orange", modifiers = ["italic"] }
 "type.enum.variant" = { fg = "orange" }
 constructor = { fg = "orange" }
 "variable.parameter" = { fg = "orange", modifiers = ["italic"] }
 
 constant = { fg = "purple" }
-"constant.builtin" = { fg = "purple" }
 variable = { fg = "fg" }
 """
     + _VAR_BUILTIN
     + """
-"variable.other.member" = { fg = "fg" }
 label = { fg = "blue" }
 namespace = { fg = "fg" }
 
 comment = { fg = "comment", modifiers = ["italic"] }
-"comment.block.documentation" = { fg = "comment", modifiers = ["italic"] }
-"comment.line.documentation" = { fg = "comment", modifiers = ["italic"] }
 
 "markup.bold" = { modifiers = ["bold"] }
 "markup.italic" = { modifiers = ["italic"] }
@@ -166,16 +153,10 @@ hint = { fg = "hint" }
 
 @dataclass(frozen=True)
 class Entry:
-    """A [palette] entry.
-
-    A named colour resolved from a palette path, or derived from palette
-    anchors via a ColorFn (scripts/color.py) for Helix-specific shades the
-    core palette doesn't carry directly.
-    """
+    """A [palette] entry: a named colour from a path or a ColorFn mix."""
 
     name: str
     ref: str | ColorFn
-    comment: str | None = None
 
 
 BLANK = None  # a blank line, preserving the grouping in the output
@@ -188,68 +169,42 @@ SLATE = mixed("bg.selection", BLUE, 0.70)
 # Slots with a VS Code UI equivalent take that element's colour; the rest
 # derive from the semantically-nearest palette anchors.
 PALETTE: list[Entry | None] = [
-    Entry("orange", ORANGE, "logo orange — types, parameters"),
-    Entry("yellow", YELLOW, "logo gold — strings"),
-    Entry("light-green", GREEN, "glowing hand green — functions"),
-    Entry("aqua", TEAL, "electric tube blue — keywords, operators"),
-    Entry("teal", SLATE, "slate blue — markup, hints"),
-    Entry("cyan", role_path("builtin"), "sky cyan — builtins"),
-    Entry("blue", BLUE, "bright tube blue — UI accents, labels"),
-    Entry("purple", PURPLE, "softened violet — constants, headings"),
-    Entry("magenta", "ansi.magenta", "sarcophagus pink — select mode"),
-    Entry("comment", "fg.comment", "muted blue shading"),
-    Entry("black", "bg.surface", "raised surface blue"),
-    Entry(
-        "variable-builtin",
-        role_path("variable.builtin"),
-        "this/self — as VS Code variable.language",
-    ),
+    Entry("orange", ORANGE),
+    Entry("yellow", YELLOW),
+    Entry("light-green", GREEN),
+    Entry("aqua", TEAL),
+    Entry("teal", SLATE),
+    Entry("cyan", role_path("builtin")),
+    Entry("blue", BLUE),
+    Entry("purple", PURPLE),
+    Entry("magenta", "ansi.magenta"),
+    Entry("comment", "fg.comment"),
+    Entry("black", "bg.surface"),
+    Entry("variable-builtin", role_path("variable.builtin")),
     BLANK,
-    Entry("add", GREEN, "as VS Code gitDecoration.added"),
-    Entry("change", role_path("modified"), "as VS Code gitDecoration.modified"),
-    Entry("delete", RED, "as VS Code gitDecoration.deleted"),
+    Entry("add", GREEN),
+    Entry("change", role_path("modified")),
+    Entry("delete", RED),
     BLANK,
-    Entry("error", RED, "as VS Code editorError"),
-    Entry("info", role_path("info"), "as VS Code editorInfo"),
+    Entry("error", RED),
+    Entry("info", role_path("info")),
     Entry("hint", SLATE),
     BLANK,
-    Entry("fg", "fg.base", "pale blue highlight white"),
+    Entry("fg", "fg.base"),
     Entry("fg-dark", "fg.muted"),
-    Entry(
-        "fg-gutter",
-        mixed("bg.base", "fg.ink", 0.10),
-        "whitespace marks — flattened editorWhitespace",
-    ),
-    Entry("fg-linenr", "fg.comment", "as VS Code editorLineNumber"),
-    Entry("fg-selected", "bg.selection", "menu selection bg — as VS Code list selection"),
+    Entry("fg-gutter", mixed("bg.base", "fg.ink", 0.10)),
+    Entry("fg-linenr", "fg.comment"),
+    Entry("fg-selected", "bg.selection"),
     Entry("border", "bg.border"),
     Entry("border-highlight", "syntax.keyword"),
-    Entry("bg", "bg.base", "hangar deep blue"),
-    Entry("bg-inlay", mixed("bg.base", "bg.selection", 0.50), "flattened list.focusBackground"),
-    Entry(
-        "bg-selection",
-        mixed("bg.selection", "syntax.keyword", 0.20),
-        "selection lifted toward tube blue for visibility",
-    ),
-    Entry("bg-menu", "bg.sunken", "statusline, popups"),
+    Entry("bg", "bg.base"),
+    Entry("bg-inlay", mixed("bg.base", "bg.selection", 0.50)),
+    Entry("bg-selection", mixed("bg.selection", "syntax.keyword", 0.20)),
+    Entry("bg-menu", "bg.sunken"),
     Entry("bg-focus", "bg.overlay"),
 ]
 
-HEADER = """\
-# {slug} — a Helix theme from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/helix.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-
-# Syntax roles mirror the rust-in-peace VSCode theme (original structure):
-#   keywords / operators / delimiters / tags = electric tube blue
-#   functions / decorators = glow green      strings  = logo gold
-#   types / parameters     = logo orange     constants = violet
-#   builtins / function.builtin = sky cyan   comments = muted blue
-#   this/self (variable.builtin) = logo gold italic
-# The theme is standalone — markup, diagnostics, and the full UI layer are
-# defined below. Every colour in [palette] derives from the shared role
-# table (scripts/roles.py); diffs and diagnostics follow the VS Code
-# theme's UI elements. Helix-only shades use declared mix formulas."""
+HEADER = "# {slug} — generated; do not edit. Rebuild via `just build-ports`."
 
 
 def generate(flavor: Flavor) -> str:
@@ -264,8 +219,7 @@ def generate(flavor: Flavor) -> str:
             continue
         ref = entry.ref
         hex_colour = resolve_palette_path(palette, ref) if isinstance(ref, str) else ref(palette)
-        line = f'{entry.name.ljust(width)} = "{hex_colour}"'
-        palette_lines.append(f"{line} # {entry.comment}" if entry.comment else line)
+        palette_lines.append(f'{entry.name.ljust(width)} = "{hex_colour}"')
 
     header = HEADER.format(slug=flavor.slug)
     return "\n".join([header, "", ROLES, "", "[palette]", *palette_lines, ""])

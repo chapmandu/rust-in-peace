@@ -1,37 +1,6 @@
-# rust-in-peace — a Ptyxis palette from the Megadeth "Rust in Peace" cover palette.
-# Generated from the src/ palettes by scripts/targets/ptyxis.py (just build-ports).
-# Do not edit by hand: edit the palette and rebuild.
-#
-# The 16 ANSI slots plus background/foreground/cursor and the titlebar
-# pair. [Light] and [Dark] share one block — this is a dark theme
-# under either appearance.
+# rust-in-peace — generated; do not edit. Rebuild via `just build-ports`.
 [Palette]
 Name=Rust in Peace
-
-[Light]
-Background=#101530
-Foreground=#d3e0f0
-Cursor=#d3e0f0
-TitlebarBackground=#070a1a
-TitlebarForeground=#d3e0f0
-Color0=#1c2547
-Color1=#eb8667
-Color2=#95de73
-Color3=#e8e274
-Color4=#9a63de
-Color5=#eb8db7
-Color6=#84bef5
-Color7=#d3e0f0
-Color8=#6570a8
-Color9=#f0a48d
-Color10=#b0e696
-Color11=#ede893
-Color12=#b085e5
-Color13=#f0aac9
-Color14=#a3cef8
-Color15=#eef4fb
-
-[Dark]
 Background=#101530
 Foreground=#d3e0f0
 Cursor=#d3e0f0
