@@ -11,10 +11,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: jdx/mise-action@v4.3.0
-      - run: npm ci
-      - run: uv sync
-      - run: npx @vscode/vsce publish
+      - run: gh release download "${{ github.event.release.tag_name }}" --repo "${{ github.repository }}" --pattern '*.vsix'
         env:
+          GH_TOKEN: ${{ github.token }}
+      - run: npx --yes @vscode/vsce publish --packagePath rust-in-peace.vsix
+        env:
+          # Global Azure DevOps PATs stop working 1 Dec 2026; confirm the repo secret is org-scoped or replace it before then.
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
