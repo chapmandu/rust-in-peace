@@ -21,8 +21,8 @@ type Theme = dict[str, Any]
 _PLACEHOLDER_RE = re.compile(r"\{\{\s*([\w.]+)\s*\}\}")
 
 # Keys that belong in a VS Code colour theme. Everything else in the YAML
-# (anchors dump, author, maintainers, $schema, semanticClass) is source
-# metadata and is dropped before the JSON is written.
+# (anchors dump, $schema, leftover source metadata) is dropped before the
+# JSON is written.
 _THEME_KEYS = ("semanticHighlighting", "colors", "tokenColors")
 
 
