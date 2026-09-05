@@ -1,9 +1,5 @@
 $schema: vscode://schemas/color-theme
 name: Rust in Peace
-author: chapmandu
-maintainers:
-  - Adam Chapman <adam.p.chapman@gmail.com>
-semanticClass: theme.rustInPeace
 semanticHighlighting: true
 # Colours resolve from src/palette.json via double-brace placeholders
 # (see scripts/generate.py). Role names ({{builtin}}, {{keyword}}, …) go
@@ -46,12 +42,9 @@ rustInPeace:
     - &NonText       '{{fg.ink}}1A'              # structural ink overlay: white on dark, navy on light
     - &INK           '{{fg.ink}}'
     - &TAB_DROP_BG   '{{bg.selection}}70'
-    # Deep tube blue — a saturated hangar blue dark enough for white button text.
     - &BUTTON_BG     '{{ui.button}}'
     - &BUTTON_FG     '{{ansi.brightWhite}}'
-    # Deep skull-violet — the violet accent darkened to background depth.
     - &STATUS_BAR_BG '{{ui.statusBar}}'
-    # UI Variants
     - &BGLighter     '{{bg.overlay}}'
     - &BGLight       '{{bg.surface}}'
     - &BGDark        '{{bg.sunken}}'
@@ -545,8 +538,6 @@ tokenColors:
     scope:
     - comment
     - punctuation.definition.comment
-    - unused.comment
-    - wildcard.comment
     settings:
       foreground: *COMMENT
 
