@@ -14,7 +14,7 @@ jobs:
       - run: gh release download "${{ github.event.release.tag_name }}" --repo "${{ github.repository }}" --pattern '*.vsix'
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: npx --yes @vscode/vsce publish --packagePath rust-in-peace.vsix
+      - run: npx --yes @vscode/vsce@3.9.2 publish --packagePath rust-in-peace.vsix
         env:
           # Global Azure DevOps PATs stop working 1 Dec 2026; confirm the repo secret is org-scoped or replace it before then.
           VSCE_PAT: ${{ secrets.VSCE_PAT }}

@@ -83,8 +83,6 @@ Copy the relevant file into your tool's theme directory, then select `rust-in-pe
 
 > Herdr has no standalone theme files — its files are config fragments to merge into `~/.config/herdr/config.toml`, recolouring the `tokyo-night` base theme (`tokyo-night-day` for Dawn Patrol).
 
-To add another target, drop a generator in `scripts/targets/` and register it in `scripts/build_ports.py`; it reuses the shared palette loader and resolver in `scripts/palette.py`.
-
 <br/>
 
 ## Contributing
