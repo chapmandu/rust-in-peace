@@ -509,7 +509,7 @@ tokenColors:
     - entity.name.class
     settings:
       foreground: *ORANGE
-      fontStyle: normal
+      fontStyle: ""
 
   - name: this, super, self, etc.
     scope:
@@ -698,7 +698,7 @@ tokenColors:
     - support.variable
     - variable.other.predefined
     settings:
-      fontStyle: regular
+      fontStyle: ""
       foreground: *PURPLE
 
   - name: Built-in functions / properties
@@ -706,7 +706,7 @@ tokenColors:
     - support.function
     - support.type.property-name
     settings:
-      fontStyle: regular
+      fontStyle: ""
 
 # =============================================================================
 # Punctuation
@@ -817,7 +817,7 @@ tokenColors:
     - meta.interface-or-protocol storage.type.objc
     - source.groovy storage.type.def
     settings:
-      fontStyle: regular
+      fontStyle: ""
       foreground: *TEAL
 
   - name: Types
@@ -972,7 +972,7 @@ tokenColors:
     - meta.export variable.other.readwrite.alias                             # Module import aliasing (alias name)
     - meta.variable.assignment.destructured.object.coffee variable variable  # Object destructuring variable (coffeescript)
     settings:
-      fontStyle: normal
+      fontStyle: ""
       foreground: *FG
 
 # =============================================================================
@@ -1032,7 +1032,7 @@ tokenColors:
     scope:
     - support.constant
     settings:
-      fontStyle: normal
+      fontStyle: ""
       foreground: *PURPLE
 
   - name: Makefile prerequisite names
