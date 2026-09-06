@@ -144,9 +144,6 @@ FIRST_BASELINE = 62
 LINE_H = 24
 FONT = 13
 CH = FONT * 0.6  # monospace advance; tspans are pinned with textLength
-
-# JetBrains Mono's advance is exactly 0.6em, matching the layout math below,
-# so textLength pinning never stretches glyphs.
 MONO = "'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace"
 
 
@@ -180,13 +177,11 @@ def render_window(palette: Palette, label: str) -> str:
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="{escape_xml(label)} palette preview">',
         f'<defs><clipPath id="window"><rect width="{W}" height="{H}" rx="12"/></clipPath></defs>',
         f'<g clip-path="url(#window)" font-family="{MONO}">',
-        # Window bands: tab strip, editor, hex rail, status bar.
         f'<rect width="{W}" height="{H}" fill="{colour("bg.sunken")}"/>',
         f'<rect y="{TAB_H}" width="{W}" height="{RAIL_Y - TAB_H}" fill="{colour("bg.base")}"/>',
         f'<rect y="{STATUS_Y}" width="{W}" height="{H - STATUS_Y}" fill="{colour("ui.statusBar")}"/>',
     ]
 
-    # Window dots, in palette colours.
     dots = [
         (20, colour("syntax.error")),
         (38, colour("syntax.string")),
@@ -208,7 +203,6 @@ def render_window(palette: Palette, label: str) -> str:
         f'<rect y="{fmt(current_line_top)}" width="{W}" height="{LINE_H}" fill="{colour("bg.selection")}" opacity="0.6"/>'
     )
 
-    # Gutter numbers and code lines.
     for index, runs in enumerate(SNIPPET):
         baseline = FIRST_BASELINE + index * LINE_H
         number_fill = colour("fg.muted") if index == CURRENT_LINE else colour("fg.comment")
@@ -234,7 +228,6 @@ def render_window(palette: Palette, label: str) -> str:
             f'<text y="{fmt(baseline)}" font-size="{FONT}" xml:space="preserve">{"".join(tspans)}</text>'
         )
 
-    # Colour rail: the eight syntax colours as named cells.
     syntax_group = palette["syntax"]
     assert isinstance(syntax_group, dict)  # noqa: S101 — narrows the palette union for mypy
     cell = W / len(syntax_group)
@@ -364,7 +357,6 @@ def inject(source: str, region: str, block: str) -> str:
 
 def build_readme() -> None:
     """Regenerate the swatch PNGs and the README's generated sections."""
-    # Dark to light: base, Hangar 18, Polaris, Dawn Patrol.
     themes = flavors()
 
     generated_dir = REPO_ROOT / "assets" / "generated"

@@ -1,10 +1,9 @@
 """Zed theme JSON.
 
 Maps the palettes onto Zed's v0.2.0 theme schema, mirroring the VS Code
-theme: chrome (tabs, panels, terminal) sits on the sunken band, the status
-bar wears the deep skull-violet, green is the active UI accent, and the
-token philosophy matches scope-for-scope. Zed themes are families, so one
-file carries all four flavors.
+theme: chrome (tabs, panels, terminal) sits on the sunken band, green is
+the active UI accent, and the token philosophy matches scope-for-scope.
+Zed themes are families, so one file carries all four flavors.
 
 Design: UI surfaces resolve once into named semantic aliases (bg, chrome,
 elevated, active, ...) that the style map reuses, so each VS Code-equivalence
@@ -39,9 +38,6 @@ class SyntaxGroup:
 # token philosophy: keywords/operators/tags = tube blue, functions = green,
 # strings = gold, types/params = orange, constants/numbers = violet,
 # builtins/links = cyan, comments = muted blue.
-# Current Zed names (old keys no longer map): punctuation.markup, link,
-# link.url, raw — not punctuation.list_marker / link_text / link_uri /
-# text.literal.
 SYNTAX = [
     SyntaxGroup(
         color=TEAL,
@@ -190,21 +186,20 @@ def _style(palette: Palette) -> dict[str, Any]:
     def col(path: str, alpha: str = "") -> str:
         return resolve_palette_path(palette, path) + alpha
 
-    # Semantic aliases for the UI surfaces.
-    bg = col("bg.base")  #             editor & primary background
-    chrome = col("bg.sunken")  #       panels, tabs, status/title bars, terminal
-    elevated = col("bg.border")  #     elevated surfaces / overlays (darkest)
-    border = col("bg.selection")  #    visible structural seams (as VS Code's editorGroup.border)
-    border_subtle = col("bg.border")  # recessed lines: wrap guides, scrollbar track
-    active = col("bg.overlay")  #      active line, active element, drop target
-    selection = col("bg.selection")  # solid list selection (VS Code list.activeSelectionBackground)
-    hover = col("bg.selection", "80")  # subtle dark list hover (VS Code list.hoverBackground)
-    muted = col("fg.comment")  #       dim text/icons, scrollbar hover
+    bg = col("bg.base")
+    chrome = col("bg.sunken")
+    elevated = col("bg.border")
+    border = col("bg.selection")
+    border_subtle = col("bg.border")
+    active = col("bg.overlay")
+    selection = col("bg.selection")
+    hover = col("bg.selection", "80")
+    muted = col("fg.comment")
     fg = col("fg.base")
     subtext = col("fg.muted")
-    accent = col(GREEN)  # active UI accent — green, as in VS Code
-    link = col(CYAN)  #    links & highlights — cyan, as in VS Code
-    git_border = active  #             border around git-status callouts
+    accent = col(GREEN)
+    link = col(CYAN)
+    git_border = active
 
     def highlight(group: SyntaxGroup) -> dict[str, Any]:
         """Colour plus any non-default font fields (schema defaults are null)."""
@@ -255,7 +250,7 @@ def _style(palette: Palette) -> dict[str, Any]:
         "icon.disabled": muted,
         "icon.placeholder": muted,
         "icon.accent": accent,
-        "status_bar.background": col("ui.statusBar"),  # deep skull-violet, matching VS Code
+        "status_bar.background": col("ui.statusBar"),
         "title_bar.background": chrome,
         "title_bar.inactive_background": chrome,
         # Breadcrumb strip below the tabs — continues the active tab's editor
