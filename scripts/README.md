@@ -71,8 +71,7 @@ palette colours onto VS Code theme keys exactly once. Colours appear as
 `{{role}}` or `{{group.key}}` placeholders that are substituted *textually*
 before the YAML is parsed — role names go through `roles.py` first; dotted
 paths hit the palette. A 2-hex alpha suffix can ride directly on a
-placeholder (`'{{bg.selection}}80'`). A custom `!alpha` tag covers the
-cases where the colour comes through a YAML anchor instead. Keys mapped to
+placeholder (`'{{bg.selection}}80'`). Keys mapped to
 `null` are stripped after parsing and fall through to VS Code's defaults.
 The emitted JSON is only a theme: `name`, `type` (from `flavor.appearance`),
 `semanticHighlighting`, `colors`, `tokenColors`. `build.py` clears `dist/`

@@ -20,12 +20,6 @@ def test_apply_palette_unknown_path_raises() -> None:
         apply_palette("x: '{{syntax.keyword}}'", PALETTE)
 
 
-def test_alpha_tag_concatenates_colour_and_alpha() -> None:
-    source = 'name: t\ncolors:\n  a: !alpha ["#101530", 99]\ntokenColors: []'
-    theme = build_theme(source, {})
-    assert theme["colors"] == {"a": "#10153099"}
-
-
 def test_build_theme_strips_unset_colours() -> None:
     source = "name: t\ncolors:\n  keep: '#101530'\n  drop: null\ntokenColors: []"
     theme = build_theme(source, {})
