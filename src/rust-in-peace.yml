@@ -84,7 +84,7 @@ colors:
   # Base Colors
   focusBorder: *COMMENT
   foreground: *FG
-  selection.background: !alpha [ *TEAL, 40 ]
+  selection.background: '{{keyword}}40'
   errorForeground: *RED
 
   # Button Control
@@ -131,8 +131,8 @@ colors:
   activityBar.background: *RAIL_BG
   activityBar.inactiveForeground: *COMMENT
   activityBar.foreground: *FG
-  activityBar.activeBorder: !alpha [*GREEN, 80]
-  activityBar.activeBackground: !alpha [*YELLOW, 10]
+  activityBar.activeBorder: '{{function}}80'
+  activityBar.activeBackground: '{{string}}10'
   activityBarBadge.background: *GREEN
   activityBarBadge.foreground: *BG
 
@@ -160,21 +160,21 @@ colors:
 
   editor.selectionBackground: *SELECTION
   editor.selectionHighlightBackground: *BGLighter
-  editor.foldBackground: !alpha [ *BGDark, 80 ]
+  editor.foldBackground: '{{bg.sunken}}80'
 
-  editor.wordHighlightBackground: !alpha [ *CYAN, 50 ]
-  editor.wordHighlightStrongBackground: !alpha [ *GREEN, 50 ]
+  editor.wordHighlightBackground: '{{builtin}}50'
+  editor.wordHighlightStrongBackground: '{{function}}50'
 
-  editor.findMatchBackground: !alpha [ *ORANGE, 80 ]
-  editor.findMatchHighlightBackground: !alpha [ *INK, 40 ]
+  editor.findMatchBackground: '{{type}}80'
+  editor.findMatchHighlightBackground: '{{fg.ink}}40'
   editor.findRangeHighlightBackground: *LineHighlight
 
-  editor.hoverHighlightBackground: !alpha [*CYAN, 50]
+  editor.hoverHighlightBackground: '{{builtin}}50'
 
   editor.lineHighlightBackground: *LineHighlight
 
   editorLink.activeForeground: *CYAN
-  editor.rangeHighlightBackground: !alpha [ *PURPLE, 15 ]
+  editor.rangeHighlightBackground: '{{constant}}15'
 
   editor.snippetTabstopHighlightBackground: *BG
   editor.snippetTabstopHighlightBorder: *COMMENT
@@ -183,7 +183,7 @@ colors:
 
   editorWhitespace.foreground: *NonText
   editorIndentGuide.background: *NonText
-  editorIndentGuide.activeBackground: !alpha [ *INK, 45]
+  editorIndentGuide.activeBackground: '{{fg.ink}}45'
   editorRuler.foreground: *NonText
 
   editorCodeLens.foreground: *COMMENT
@@ -200,20 +200,20 @@ colors:
   editorOverviewRuler.selectionHighlightForeground: *ORANGE
   editorOverviewRuler.wordHighlightForeground: *CYAN
   editorOverviewRuler.wordHighlightStrongForeground: *GREEN
-  editorOverviewRuler.modifiedForeground: !alpha [ *CYAN, 80 ]
-  editorOverviewRuler.addedForeground: !alpha [ *GREEN,  80 ]
-  editorOverviewRuler.deletedForeground: !alpha [ *RED,    80 ]
-  editorOverviewRuler.errorForeground: !alpha [ *RED,    80 ]
-  editorOverviewRuler.warningForeground: !alpha [ *ORANGE, 80 ]
-  editorOverviewRuler.infoForeground: !alpha [ *CYAN,   80 ]
+  editorOverviewRuler.modifiedForeground: '{{builtin}}80'
+  editorOverviewRuler.addedForeground: '{{function}}80'
+  editorOverviewRuler.deletedForeground: '{{error}}80'
+  editorOverviewRuler.errorForeground: '{{error}}80'
+  editorOverviewRuler.warningForeground: '{{type}}80'
+  editorOverviewRuler.infoForeground: '{{builtin}}80'
 
   editorError.foreground: *RED
   editorWarning.foreground: *ORANGE
   editorInfo.foreground: *CYAN
 
-  editorGutter.modifiedBackground: !alpha [ *CYAN, 80 ]
-  editorGutter.addedBackground: !alpha [ *GREEN,  80 ]
-  editorGutter.deletedBackground: !alpha [ *RED,    80 ]
+  editorGutter.modifiedBackground: '{{builtin}}80'
+  editorGutter.addedBackground: '{{function}}80'
+  editorGutter.deletedBackground: '{{error}}80'
 
   minimapGutter.modifiedBackground: *CYAN
   minimapGutter.addedBackground: *GREEN
@@ -228,8 +228,8 @@ colors:
   gitDecoration.conflictingResourceForeground: *ORANGE
 
   # Diff Editor Colors
-  diffEditor.insertedTextBackground: !alpha [ *GREEN, 20 ]
-  diffEditor.removedTextBackground: !alpha [ *RED, 50 ]
+  diffEditor.insertedTextBackground: '{{function}}20'
+  diffEditor.removedTextBackground: '{{error}}50'
 
   # Editor Widget Colors
   editorWidget.background: *PANEL_BG
@@ -246,11 +246,11 @@ colors:
   # Peek View Colors
   peekView.border: *SELECTION
   peekViewEditor.background: *BG
-  peekViewEditor.matchHighlightBackground: !alpha [ *YELLOW, 80 ]
+  peekViewEditor.matchHighlightBackground: '{{string}}80'
   peekViewResult.background: *BGDark
   peekViewResult.fileForeground: *FG
   peekViewResult.lineForeground: *FG
-  peekViewResult.matchHighlightBackground: !alpha [ *YELLOW, 80 ]
+  peekViewResult.matchHighlightBackground: '{{string}}80'
   peekViewResult.selectionBackground: *SELECTION
   peekViewResult.selectionForeground: *FG
   peekViewTitle.background: *BGDarker
@@ -258,8 +258,8 @@ colors:
   peekViewTitleLabel.foreground: *FG
 
   # Merge Conflicts
-  merge.currentHeaderBackground: !alpha [ *GREEN, 90 ]
-  merge.incomingHeaderBackground: !alpha [ *PURPLE, 90 ]
+  merge.currentHeaderBackground: '{{function}}90'
+  merge.incomingHeaderBackground: '{{constant}}90'
   editorOverviewRuler.currentContentForeground: *GREEN
   editorOverviewRuler.incomingContentForeground: *PURPLE
 
@@ -291,7 +291,7 @@ colors:
   # Extensions
   extensionButton.prominentBackground: *BUTTON_BG
   extensionButton.prominentForeground: *BUTTON_FG
-  extensionButton.prominentHoverBackground: !alpha [ *BUTTON_BG, 90 ]
+  extensionButton.prominentHoverBackground: '{{ui.button}}90'
 
   # Quick Picker
   pickerGroup.border: *SELECTION
