@@ -53,7 +53,6 @@ def snippet_style(palette: Palette, name: str) -> tuple[str, bool]:
 # The demo snippet, as token runs so the same code renders in every variant's
 # colours. Each line exists to exercise a palette role; the squiggle sits under
 # "intelligence" (two words combined that can't make sense — Hangar 18).
-# Token names are shared role names or dotted palette paths — not a private map.
 SNIPPET: list[list[Run]] = [
     [Run("//! Megadeth — Rust in Peace (1990)", "fg.comment")],
     [
