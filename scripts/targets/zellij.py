@@ -121,16 +121,16 @@ COMPONENTS: dict[str, Style] = {
 
 # The ten multiplayer cursor colours, in slot order (0 = no colour).
 MULTIPLAYER: list[Ref] = [
-    PURPLE,  # player_1
-    BLUE,  # player_2
-    0,  # player_3
-    YELLOW,  # player_4
-    GREEN,  # player_5
-    0,  # player_6
-    RED,  # player_7
-    0,  # player_8
-    0,  # player_9
-    0,  # player_10
+    PURPLE,
+    BLUE,
+    0,
+    YELLOW,
+    GREEN,
+    0,
+    RED,
+    0,
+    0,
+    0,
 ]
 
 HEADER = "// {slug} — generated; do not edit. Rebuild via `just build-ports`."

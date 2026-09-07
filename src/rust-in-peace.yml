@@ -40,7 +40,6 @@ rustInPeace:
   other:
     - &LineHighlight '{{bg.selection}}80'
     - &NonText       '{{fg.ink}}1A'              # structural ink overlay: white on dark, navy on light
-    - &INK           '{{fg.ink}}'
     - &TAB_DROP_BG   '{{bg.selection}}70'
     - &BUTTON_BG     '{{ui.button}}'
     - &BUTTON_FG     '{{ansi.brightWhite}}'
@@ -1020,7 +1019,6 @@ tokenColors:
     settings:
       foreground: *FG
 
-  # This is set to conform to the standard of coloring langage constants purple.
   # In this case, this colors "$?", "$@", "$*", "$1", etc..
   - name: Shell variables prefixed with "$" (edge case)
     scope:

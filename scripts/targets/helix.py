@@ -31,8 +31,6 @@ def _scope_style(palette_name: str, role: Role) -> str:
     return "{ " + ", ".join(parts) + " }"
 
 
-# function.builtin / variable.builtin are driven by the shared role table so
-# italic and colour stay aligned with VS Code (support.function / this/self).
 _FN_BUILTIN = f'"function.builtin" = {_scope_style("cyan", THEME_ROLES["function.builtin"])}'
 _VAR_BUILTIN = (
     f'"variable.builtin" = {_scope_style("variable-builtin", THEME_ROLES["variable.builtin"])}'
@@ -144,7 +142,7 @@ hint = { fg = "hint" }
 "ui.bufferline.background" = { bg = "bg-menu" }
 "ui.bufferline" = { fg = "comment", bg = "bg-menu" }
 """
-    + (  # the active-tab underline key alone would overrun the line limit
+    + (
         '"ui.bufferline.active" = '
         '{ fg = "fg", bg = "bg", underline = { color = "light-green", style = "line" } }'
     )
