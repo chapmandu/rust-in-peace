@@ -96,6 +96,7 @@ SYNTAX = [
             "string.doc",
             "string.documentation",
             "raw",
+            "text.literal",
             "character",
         ],
     ),
@@ -125,7 +126,7 @@ SYNTAX = [
     ),
     SyntaxGroup(
         color=CYAN,
-        scopes=["preproc", "link", "link.url", "string.special.url"],
+        scopes=["preproc", "link", "link_text", "link.url", "link_uri", "string.special.url"],
     ),
     SyntaxGroup(
         color=BLUE,
@@ -157,6 +158,7 @@ SYNTAX = [
             "punctuation.bracket",
             "punctuation.delimiter",
             "punctuation.markup",
+            "punctuation.list_marker",
             "punctuation.special",
             "module",
             "namespace",
@@ -351,12 +353,10 @@ def _style(palette: Palette) -> dict[str, Any]:
 
 def generate(flavors: list[Flavor]) -> str:
     """Generate the Zed theme-family JSON carrying every flavor."""
-    # JSON carries no comments, so the author field doubles as the
-    # generated-from notice.
     theme = {
         "$schema": "https://zed.dev/schema/themes/v0.2.0.json",
         "name": "Rust in Peace",
-        "author": "Adam Chapman — generated from the src/ palettes; do not edit by hand",
+        "author": "Adam Chapman",
         "themes": [
             {"name": flavor.label, "appearance": flavor.appearance, "style": _style(flavor.palette)}
             for flavor in flavors

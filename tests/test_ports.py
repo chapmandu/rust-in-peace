@@ -73,11 +73,18 @@ def test_zed_omits_schema_default_nulls(zed_family: dict[str, Any]) -> None:
             assert None not in highlight.values()
 
 
-def test_zed_uses_current_syntax_scope_names(zed_family: dict[str, Any]) -> None:
+def test_zed_keeps_official_syntax_aliases(zed_family: dict[str, Any]) -> None:
     syntax = zed_family["themes"][0]["style"]["syntax"]
-    for old, new in ZED_SCOPE_RENAMES.items():
-        assert old not in syntax, old
-        assert new in syntax, new
+    for official, current in ZED_SCOPE_RENAMES.items():
+        assert official in syntax, official
+        assert current in syntax, current
+        assert syntax[official] == syntax[current]
+
+
+def test_zed_author_is_byline(zed_family: dict[str, Any]) -> None:
+    author = zed_family["author"]
+    assert author == "Adam Chapman"
+    assert "generated" not in author.lower()
 
 
 @pytest.mark.parametrize("flavor", flavors(), ids=lambda flavor: flavor.slug)
