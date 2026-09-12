@@ -23,7 +23,7 @@
     "url": "https://github.com/chapmandu/rust-in-peace/issues"
   },
   "galleryBanner": {
-    "color": "#0D166C",
+    "color": "#101530",
     "theme": "dark"
   },
   "icon": "assets/logo.png",
@@ -36,10 +36,7 @@
     "Rust in Peace",
     "Metal",
     "Hangar 18",
-    "Holy Wars.. The Punishment Due",
-    "Black",
-    "Monokai",
-    "Cobalt2"
+    "Holy Wars.. The Punishment Due"
   ],
   "contributes": {
     "themes": [
