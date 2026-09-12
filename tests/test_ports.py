@@ -55,6 +55,49 @@ HELIX_REDUNDANT_CHILDREN = (
     "comment.line.documentation",
 )
 
+ZED_REDUNDANT_CHILDREN = (
+    "keyword.conditional",
+    "keyword.conditional.ternary",
+    "keyword.coroutine",
+    "keyword.directive",
+    "keyword.directive.define",
+    "keyword.exception",
+    "keyword.export",
+    "keyword.function",
+    "keyword.import",
+    "keyword.modifier",
+    "keyword.operator",
+    "keyword.repeat",
+    "keyword.return",
+    "keyword.type",
+    "function.call",
+    "function.decorator",
+    "function.macro",
+    "function.method",
+    "function.method.call",
+    "string.regex",
+    "string.regexp",
+    "string.special",
+    "string.special.symbol",
+    "string.special.path",
+    "string.doc",
+    "string.documentation",
+    "type.builtin",
+    "type.class.definition",
+    "type.definition",
+    "type.interface",
+    "type.super",
+    "constant.builtin",
+    "number.float",
+    "tag.delimiter",
+    "comment.doc",
+    "comment.documentation",
+    "punctuation.bracket",
+    "punctuation.delimiter",
+    "punctuation.special",
+    "variable.member",
+)
+
 
 @pytest.fixture(scope="module")
 def zed_family() -> dict[str, Any]:
@@ -95,6 +138,28 @@ def test_ptyxis_is_single_scheme(flavor: Flavor) -> None:
     assert text.count("[Palette]") == 1
     assert sum(1 for line in text.splitlines() if line.startswith("Background=")) == 1
     assert f"Name={flavor.label}" in text
+
+
+def test_zed_drops_redundant_children(zed_family: dict[str, Any]) -> None:
+    syntax = zed_family["themes"][0]["style"]["syntax"]
+    for key in ZED_REDUNDANT_CHILDREN:
+        assert key not in syntax, key
+    kept_aliases = set(ZED_SCOPE_RENAMES) | set(ZED_SCOPE_RENAMES.values())
+    for scope, style in syntax.items():
+        parent = scope
+        while "." in parent:
+            parent = parent.rsplit(".", 1)[0]
+            if parent not in syntax:
+                continue
+            if style == syntax[parent] and scope not in kept_aliases:
+                raise AssertionError(f"{scope} repeats {parent}")
+            break
+    assert syntax["function.builtin"] != syntax["function"]
+    assert syntax["string.special.url"] != syntax["string"]
+    assert syntax["variable.builtin"] != syntax["variable"]
+    assert "font_style" in syntax["parameter"]
+    for key in ("comment.todo", "comment.warning", "comment.error", "comment.note"):
+        assert syntax[key] != syntax["comment"]
 
 
 @pytest.mark.parametrize("flavor", flavors(), ids=lambda flavor: flavor.slug)
