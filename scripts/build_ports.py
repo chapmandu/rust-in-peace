@@ -41,13 +41,13 @@ def main() -> None:
             file = f"{target.dir}/{flavor.slug}.{target.ext}"
             out_path = PORTS_DIR / file
             out_path.parent.mkdir(parents=True, exist_ok=True)
-            out_path.write_text(target.generate(flavor))
+            out_path.write_text(target.generate(flavor), encoding="utf-8")
             print(f"{target.name} -> ports/{file}")
 
     # Zed themes are families: one file carries all four flavors.
     out_path = PORTS_DIR / "zed" / "rust-in-peace.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(zed.generate(all_flavors))
+    out_path.write_text(zed.generate(all_flavors), encoding="utf-8")
     print("Zed -> ports/zed/rust-in-peace.json")
 
 
