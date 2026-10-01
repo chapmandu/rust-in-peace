@@ -16,7 +16,7 @@ jobs:
           # Full history — gitleaks scans every commit, not just the tip.
           fetch-depth: 0
       # Installs the toolchain pinned in mise.toml (python, node, uv, just, gitleaks).
-      - uses: jdx/mise-action@v4.3.0
+      - uses: jdx/mise-action@v5.0.0
       - run: uv sync
       - run: npm ci
       - run: just check
